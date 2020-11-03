@@ -84,6 +84,13 @@ public class Event {
     }
 
     /**
+     * @param id Event id to set.
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    /**
      * @return Event name.
      */
     public String getName() {

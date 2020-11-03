@@ -86,6 +86,13 @@ public class Structure {
     }
 
     /**
+     * @param id Structure id to set.
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    /**
      * @return Structure name.
      */
     public String getName() {

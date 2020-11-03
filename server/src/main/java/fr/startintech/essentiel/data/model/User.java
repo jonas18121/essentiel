@@ -61,6 +61,13 @@ public class User {
     }
 
     /**
+     * @param id User id to set.
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    /**
      * @return User email.
      */
     public String getEmail() {
