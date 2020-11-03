@@ -89,11 +89,8 @@ public class StructureController {
     public Structure updateStructure(@RequestBody Structure structure, @PathVariable Long id) throws IdMismatchException, NotFoundException {
         // @ResponseBody means the returned String is the response, not a view name
         // @RequestParam means it is a parameter from the GET or POST request
-        if (structure.getId() != id) {
-            throw new IdMismatchException();
-        }
-        repository.findById(id)
-                .orElseThrow(NotFoundException::new);
+        repository.findById(id).orElseThrow(NotFoundException::new);
+        structure.setId(id);
         return repository.save(structure);
     }
 }
