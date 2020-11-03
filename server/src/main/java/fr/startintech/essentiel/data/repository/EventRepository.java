@@ -6,6 +6,10 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
+/**
+ * Event repository.
+ * Extends CrudRepository to have basic CRUD operations.
+ */
 public interface EventRepository extends CrudRepository<Event, Long> {
     Event findByName(String name);
     List<Event> findAll();
