@@ -1,0 +1,181 @@
+---
+swagger: "2.0"
+
+info:
+  version: "1.0.0"
+  title: "ESSentiel API"
+  description: "Start.in'tech - ESSentiel REST API"
+  contact:
+    email: "l.nicolas@intech-sud.fr"
+  
+tags:
+- name: "user"
+  description: "Operations about users"
+
+paths:
+  # USERS
+  /users:
+    get:
+      tags:
+      - "user"
+      summary: "Find all users"
+      operationId: "findAllUsers"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "Successful Operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/User"
+        "400":
+          description: "Bad Request"
+    post:
+      tags:
+      - "user"
+      summary: "Add a new user"
+      operationId: "addUser"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "User object that needs to be added"
+        required: true
+        schema:
+          $ref: "#/definitions/User"
+      responses:
+        "200":
+          description: "Successful Operation"
+          schema:
+            type: "integer"
+            format: "int64"
+        "400":
+          description: "Bad Request"
+    delete:
+      tags:
+      - user
+      summary: "Delete all users"
+      operationId: "deleteAllUsers"
+      produces:
+      - "application/json"
+      responses:
+        "400":
+          description: "Bad Request"
+
+  /users/email/{userEmail}:
+    get:
+      tags:
+      - "user"
+      summary: "Find users by email"
+      operationId: "findUserByEmail"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "userEmail"
+        in: "path"
+        description: "Email of the user to return"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "Successful Operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/User"
+        "400":
+          description: "Bad Request"
+        "404":
+          description: "User Not Found"
+
+  /users/id/{userId}:
+    get:
+      tags:
+      - "user"
+      summary: "Find user by ID"
+      operationId: "findUserById"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "userId"
+        in: "path"
+        description: "Identifier of user to return"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "Successful Operation"
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/User'
+        "400":
+          description: "Invalid ID supplied"
+        "404":
+          description: "User not found"
+    put:
+      tags:
+      - "user"
+      summary: "Update an existing user"
+      operationId: up"dateUser
+      produces:
+      - "application/json"
+      parameters:
+      - name: "userId"
+        in: "path"
+        description: "Identifier of user to update"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "400":
+          description: "Invalid ID supplied"
+        "404":
+          description: "User not found"
+        "405":
+          description: "Validation exception"
+    delete:
+      tags:
+      - "user"
+      summary: "Delete user"
+      operationId: "deleteUser"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "userId"
+        in: "path"
+        description: "The identifier of the user that needs to be deleted"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "400":
+          description: "Invalid ID supplied"
+        "404":
+          description: "User not found"
+
+definitions:
+  User:
+    description: "User"
+    properties:
+      idUser:
+        type: "integer"
+        format: "int64"
+      emailUser:
+        type: "string"
+      passwordUser:
+        type: "string"
+      roleUser:
+        type: "string"
+
+
+# Added by API Auto Mocking Plugin
+host: "localhost:8080"
+basePath: "/api"
+schemes:
+ - "http"
