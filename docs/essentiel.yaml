@@ -1,4 +1,5 @@
 ---
+---
 swagger: "2.0"
 
 info:
@@ -9,10 +10,306 @@ info:
     email: "l.nicolas@intech-sud.fr"
   
 tags:
+- name: "event"
+  description: "Operations about events"
+- name: "structure"
+  description: "Operations about structures"
 - name: "user"
   description: "Operations about users"
 
 paths:
+  # EVENT
+  /event:
+    get:
+      tags:
+      - "event"
+      summary: "Find all events"
+      operationId: "findAllEvents"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "Successful Operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Event"
+        "400":
+          description: "Bad Request"
+    post:
+      tags:
+      - "event"
+      summary: "Add a new event"
+      operationId: "addEvent"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Event object that needs to be added"
+        required: true
+        schema:
+          $ref: "#/definitions/Event"
+      responses:
+        "200":
+          description: "Successful Operation"
+          schema:
+            type: "integer"
+            format: "int64"
+        "400":
+          description: "Bad Request"
+    delete:
+      tags:
+      - "event"
+      summary: "Delete all events"
+      operationId: "deleteAllEvents"
+      produces:
+      - "application/json"
+      responses:
+        "400":
+          description: "Bad Request"
+
+  /event/name/{eventName}:
+    get:
+      tags:
+      - "event"
+      summary: "Find event by name"
+      operationId: "findEventByName"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "eventName"
+        in: "path"
+        description: "Name of the event to return"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "Successful Operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Event"
+        "400":
+          description: "Bad Request"
+        "404":
+          description: "Event Not Found"
+
+  /event/id/{eventId}:
+    get:
+      tags:
+      - "event"
+      summary: "Find event by ID"
+      operationId: "findEventById"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "eventId"
+        in: "path"
+        description: "Identifier of event to return"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "Successful Operation"
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Event'
+        "400":
+          description: "Invalid ID supplied"
+        "404":
+          description: "Event not found"
+    put:
+      tags:
+      - "event"
+      summary: "Update an existing event"
+      operationId: "updateEvent"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "eventId"
+        in: "path"
+        description: "Identifier of event to update"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "400":
+          description: "Invalid ID supplied"
+        "404":
+          description: "Event not found"
+        "405":
+          description: "Validation exception"
+    delete:
+      tags:
+      - "event"
+      summary: "Delete event"
+      operationId: "deleteEvent"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "eventId"
+        in: "path"
+        description: "The identifier of the event that needs to be deleted"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "400":
+          description: "Invalid ID supplied"
+        "404":
+          description: "Event not found"
+
+  # STRUCTURE
+  /structure:
+    get:
+      tags:
+      - "structure"
+      summary: "Find all structures"
+      operationId: "findAllStructures"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "Successful Operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Structure"
+        "400":
+          description: "Bad Request"
+    post:
+      tags:
+      - "structure"
+      summary: "Add a new structure"
+      operationId: "addStructure"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Structure object that needs to be added"
+        required: true
+        schema:
+          $ref: "#/definitions/Structure"
+      responses:
+        "200":
+          description: "Successful Operation"
+          schema:
+            type: "integer"
+            format: "int64"
+        "400":
+          description: "Bad Request"
+    delete:
+      tags:
+      - "structure"
+      summary: "Delete all structures"
+      operationId: "deleteAllStructures"
+      produces:
+      - "application/json"
+      responses:
+        "400":
+          description: "Bad Request"
+
+  /structure/name/{structureName}:
+    get:
+      tags:
+      - "structure"
+      summary: "Find structure by name"
+      operationId: "findStructureByName"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "structureName"
+        in: "path"
+        description: "Name of the structure to return"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "Successful Operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Structure"
+        "400":
+          description: "Bad Request"
+        "404":
+          description: "Structure Not Found"
+
+  /structure/id/{structureId}:
+    get:
+      tags:
+      - "structure"
+      summary: "Find structure by ID"
+      operationId: "findStructureById"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "structureId"
+        in: "path"
+        description: "Identifier of structure to return"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "Successful Operation"
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Structure'
+        "400":
+          description: "Invalid ID supplied"
+        "404":
+          description: "Structure not found"
+    put:
+      tags:
+      - "structure"
+      summary: "Update an existing structure"
+      operationId: "updateStructure"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "structureId"
+        in: "path"
+        description: "Identifier of structure to update"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "400":
+          description: "Invalid ID supplied"
+        "404":
+          description: "Structure not found"
+        "405":
+          description: "Validation exception"
+    delete:
+      tags:
+      - "structure"
+      summary: "Delete structure"
+      operationId: "deleteStructure"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "structureId"
+        in: "path"
+        description: "The identifier of the structure that needs to be deleted"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "400":
+          description: "Invalid ID supplied"
+        "404":
+          description: "Structure not found"
+
   # USERS
   /users:
     get:
@@ -160,6 +457,22 @@ paths:
           description: "User not found"
 
 definitions:
+  Event:
+    description: "Event"
+    properties:
+      idEvent:
+        type: "integer"
+        format: "int64"
+      nameEvent:
+        type: "string"
+  Structure:
+    description: "Structure"
+    properties:
+      idStructure:
+        type: "integer"
+        format: "int64"
+      nameStructure:
+        type: "string"
   User:
     description: "User"
     properties:
@@ -179,3 +492,4 @@ host: "localhost:8080"
 basePath: "/api"
 schemes:
  - "http"
+ - "https"
