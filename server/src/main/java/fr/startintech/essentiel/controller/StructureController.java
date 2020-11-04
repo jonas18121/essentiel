@@ -46,7 +46,7 @@ public class StructureController {
      * @throws NotFoundException
      */
     @GetMapping("/{id}") // Map ONLY GET Requests
-    public Structure findOne(@PathVariable Long id) throws NotFoundException {
+    public Structure findById(@PathVariable Long id) throws NotFoundException {
         return repository.findById(id)
                 .orElseThrow(NotFoundException::new);
     }
@@ -73,7 +73,7 @@ public class StructureController {
      * Delete all structures
      */
     @DeleteMapping // Map ONLY DELETE Requests
-    public void delete() {
+    public void deleteAll() {
         repository.deleteAll();
     }
 

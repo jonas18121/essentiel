@@ -46,7 +46,7 @@ public class UserController {
      * @throws NotFoundException
      */
     @GetMapping("/{id}") // Map ONLY GET Requests
-    public User findOne(@PathVariable Long id) throws NotFoundException {
+    public User findById(@PathVariable Long id) throws NotFoundException {
         return repository.findById(id)
                 .orElseThrow(NotFoundException::new);
     }
@@ -73,7 +73,7 @@ public class UserController {
      * Delete all users
      */
     @DeleteMapping // Map ONLY DELETE Requests
-    public void delete() {
+    public void deleteAll() {
         repository.deleteAll();
     }
 
@@ -86,7 +86,7 @@ public class UserController {
      * @throws NotFoundException
      */
     @PutMapping("/{id}") // Map ONLY PUT Requests
-    public User updateUser(@RequestBody User user, @PathVariable Long id) throws IdMismatchException, NotFoundException {
+    public User update(@RequestBody User user, @PathVariable Long id) throws IdMismatchException, NotFoundException {
         // @ResponseBody means the returned String is the response, not a view name
         // @RequestParam means it is a parameter from the GET or POST request
         repository.findById(id).orElseThrow(NotFoundException::new);
