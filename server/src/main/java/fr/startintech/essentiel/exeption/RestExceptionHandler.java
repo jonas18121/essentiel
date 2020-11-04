@@ -20,13 +20,13 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(NotFoundException.class)
     protected ResponseEntity<Object> handleNotFound(
             Exception ex, WebRequest request) {
-        return handleExceptionInternal(ex, "Course not found",
+        return handleExceptionInternal(ex, "Object not found",
                 new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
 
     @ExceptionHandler({
-            fr.startintech.essentiel.exeption.IdMismatchException.class,
-            fr.startintech.essentiel.exeption.InvalidEntryException.class,
+            IdMismatchException.class,
+            InvalidEntryException.class,
             ConstraintViolationException.class,
             DataIntegrityViolationException.class
     })
