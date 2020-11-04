@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Event REST Controller
+ */
 @RestController // This means that this class is a Controller
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping(path="/api/event") // This means URL's start with /api (after Application path)
