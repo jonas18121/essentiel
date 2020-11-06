@@ -48,7 +48,9 @@ jobs:
 #          docker push $SERVER_REPOSITORY:latest
           
       - name: 🏗 Build the client Docker image
-        run: docker build -t $CLIENT_REPOSITORY server
+        run: |
+          cd server && ./mvnw clean install
+          docker build -t $CLIENT_REPOSITORY .
 
       - name: 🏷 Tag the client Docker image
         run: |
