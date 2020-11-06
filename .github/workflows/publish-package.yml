@@ -34,30 +34,32 @@ jobs:
       - name: 🔓 Auth GithubPackages
         run: echo "$DOCKER_PASSWORD" | docker login docker.pkg.github.com -u $DOCKER_USER --password-stdin
 
-#      - name: 🏗 Build the server Docker image
-#        run: cd server && ./mvnw spring-boot:build-image -Dspring-boot.build-image.imageName=$SERVER_REPOSITORY
-#
-#      - name: 🏷 Tag the server Docker image
-#        run: |
-#          docker tag $SERVER_REPOSITORY:latest $SERVER_REPOSITORY:${GITHUB_REF#refs/*/}
-#          docker tag $SERVER_REPOSITORY:latest $SERVER_REPOSITORY:latest
-#
-#      - name: 🚀 Push server Docker image to Github package registry
-#        run: |
-#          docker push $SERVER_REPOSITORY:${GITHUB_REF#refs/*/}
-#          docker push $SERVER_REPOSITORY:latest
-          
+      # Client package
       - name: 🏗 Build the client Docker image
-        run: |
-          cd server && ./mvnw clean install
-          docker build -t $CLIENT_REPOSITORY .
+        run: docker build -t $CLIENT_REPOSITORY client
 
-      - name: 🏷 Tag the client Docker image
+      - name: 🏷 Tag the server Docker image
         run: |
           docker tag $CLIENT_REPOSITORY:latest $CLIENT_REPOSITORY:${GITHUB_REF#refs/*/}
           docker tag $CLIENT_REPOSITORY:latest $CLIENT_REPOSITORY:latest
 
-      - name: 🚀 Push client Docker image to Github package registry
+      - name: 🚀 Push server Docker image to Github package registry
         run: |
           docker push $CLIENT_REPOSITORY:${GITHUB_REF#refs/*/}
           docker push $CLIENT_REPOSITORY:latest
+          
+      # Server package
+      - name: 🏗 Build the server Docker image
+        run: |
+          cd server && ./mvnw clean install
+          docker build -t $SERVER_REPOSITORY .
+
+      - name: 🏷 Tag the client Docker image
+        run: |
+          docker tag $SERVER_REPOSITORY:latest $SERVER_REPOSITORY:${GITHUB_REF#refs/*/}
+          docker tag $SERVER_REPOSITORY:latest $SERVER_REPOSITORY:latest
+
+      - name: 🚀 Push client Docker image to Github package registry
+        run: |
+          docker push $SERVER_REPOSITORY:${GITHUB_REF#refs/*/}
+          docker push $SERVER_REPOSITORY:latest
