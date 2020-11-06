@@ -34,18 +34,18 @@ jobs:
       - name: 🔓 Auth GithubPackages
         run: echo "$DOCKER_PASSWORD" | docker login docker.pkg.github.com -u $DOCKER_USER --password-stdin
 
-      - name: 🏗 Build the server Docker image
-        run: cd server && ./mvnw spring-boot:build-image -Dspring-boot.build-image.imageName=$SERVER_REPOSITORY
-
-      - name: 🏷 Tag the server Docker image
-        run: |
-          docker tag $SERVER_REPOSITORY:latest $SERVER_REPOSITORY:${GITHUB_REF#refs/*/}
-          docker tag $SERVER_REPOSITORY:latest $SERVER_REPOSITORY:latest
-
-      - name: 🚀 Push server Docker image to Github package registry
-        run: |
-          docker push $SERVER_REPOSITORY:${GITHUB_REF#refs/*/}
-          docker push $SERVER_REPOSITORY:latest
+#      - name: 🏗 Build the server Docker image
+#        run: cd server && ./mvnw spring-boot:build-image -Dspring-boot.build-image.imageName=$SERVER_REPOSITORY
+#
+#      - name: 🏷 Tag the server Docker image
+#        run: |
+#          docker tag $SERVER_REPOSITORY:latest $SERVER_REPOSITORY:${GITHUB_REF#refs/*/}
+#          docker tag $SERVER_REPOSITORY:latest $SERVER_REPOSITORY:latest
+#
+#      - name: 🚀 Push server Docker image to Github package registry
+#        run: |
+#          docker push $SERVER_REPOSITORY:${GITHUB_REF#refs/*/}
+#          docker push $SERVER_REPOSITORY:latest
           
       - name: 🏗 Build the client Docker image
         run: docker build -t $CLIENT_REPOSITORY server
