@@ -17,6 +17,6 @@ docker run -p 8080:8080 docker.pkg.github.com/alcinae/essentiel/server
 docker run -p 4200:4200 docker.pkg.github.com/alcinae/essentiel/client
 ```
 
-L'API sera disponible sur https://localhost:8080/api/ (voir <a href="https://alcinae.github.io/essentiel/">documentation</a>)
+L'API sera disponible sur <a href="http://localhost:8080/api/">localhost:8080/api</a> (voir <a href="https://alcinae.github.io/essentiel/">documentation</a>)
 
-La plateforme web sera accessible depuis https://localhost:4200/
+La plateforme web sera accessible depuis <a href="http://localhost:4200">localhost:4200</a>
