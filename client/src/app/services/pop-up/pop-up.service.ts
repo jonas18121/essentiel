@@ -10,8 +10,10 @@ export class PopUpService {
   // "data" is defined in marker-service as "s"
   makeStructuresPopup(data: any): string {
     return `` +
-      `<div>ID: ${ data.idStructure }</div>` +
-      `<div>Name: ${ data.nameStructure }</div>` +
-      `<div>Coordinates: ${ data.coordinates }</div>`;
+      `<div>ID: ${ data.id }</div>` +
+      `<div>Name: ${ data.name }</div>` +
+      `<div>Address: ${ data.address }</div>` +
+      `<div>Coordinates: [ ${ data.longitude }, ${ data.latitude } ]</div>`;
+
   }
 }

@@ -1,31 +1,34 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatIconModule } from '@angular/material/icon';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { MapComponent } from './map/map.component';
+import { MapComponent } from './components/map/map.component';
 
-import { MarkerService } from './services/marker.service';
+import { MarkerService } from './services/marker/marker.service';
 import { HttpClientModule } from '@angular/common/http';
 
-import { PopUpService } from './services/pop-up.service';
+import { PopUpService } from './services/pop-up/pop-up.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AddStructureComponent } from './components/add-structure/add-structure.component';
+import { HomeComponent } from './components/home/home.component';
+import {ReactiveFormsModule} from "@angular/forms";
+import { ViewStructureComponent } from './components/view-structure/view-structure.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    MapComponent
+    MapComponent,
+    AddStructureComponent,
+    HomeComponent,
+    ViewStructureComponent
   ],
   imports: [
     BrowserModule,
-    MatToolbarModule,
-    MatIconModule,
     AppRoutingModule,
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    ReactiveFormsModule
   ],
   providers: [
     MarkerService,

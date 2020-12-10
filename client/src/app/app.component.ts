@@ -1,4 +1,8 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
+import {PopUpService} from "./services/pop-up/pop-up.service";
+import {StructureService} from "./services/structure/structure.service";
+import {Structure} from "./models/structure/structure";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-root',
@@ -6,5 +10,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'client';
+  title = 'ESSentiel';
+
+  constructor(private popupService: PopUpService,
+              private router: Router,
+              private structureService: StructureService) { }
+
+  gotoAddStructure() {
+    this.router.navigate(['/add/structure']);
+  }
 }
