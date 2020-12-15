@@ -3,9 +3,9 @@ import { Structure } from "../../models/structure/structure";
 import { StructureService } from "../../services/structure/structure.service";
 import { Router } from "@angular/router";
 import { FormBuilder, ReactiveFormsModule} from "@angular/forms";
-import {GeolocalisationService} from "../../services/geolocalisation/geolocalisation.service";
-import {Observable} from "rxjs";
-import {HttpClient} from "@angular/common/http";
+import { GeolocalisationService } from "../../services/geolocalisation/geolocalisation.service";
+import { Observable } from "rxjs";
+import { HttpClient } from "@angular/common/http";
 
 @Component({
   selector: 'app-add-structure',

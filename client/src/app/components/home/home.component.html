@@ -4,11 +4,16 @@
     <input class="form-control col-md-9 ml-3" list="datalistOptions" id="exampleDataList" placeholder="Type to search...">
     <datalist id="datalistOptions">
       <option *ngFor="let structure of structures" value="{{ structure.name }}">
+      <option *ngFor="let event of events" value="{{ event.name }}">
     </datalist>
 
 
     <button (click)="gotoAddStructure()" class="btn btn-success mt-2 ml-3">
       New structure
+    </button>
+
+    <button (click)="gotoAddEvent()" class="btn btn-success mt-2 ml-3">
+      New event
     </button>
 
     <h4 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
@@ -18,6 +23,16 @@
     <ul class="nav flex-column mb-2">
       <li *ngFor="let structure of structures" class="nav-item">
         <a class="nav-link" href="http://localhost:8000/structures/{{ encodeUri(structure.name) }}" target="_blank">{{ structure.name }}</a>
+      </li>
+    </ul>
+
+    <h4 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+      Events
+    </h4>
+
+    <ul class="nav flex-column mb-2">
+      <li *ngFor="let event of events" class="nav-item">
+        <a [routerLink]="['/event', toLowerCase(event.name), event.id]" class="nav-link" href="">{{ event.name }}</a>
       </li>
     </ul>
 

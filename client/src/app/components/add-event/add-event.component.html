@@ -1,0 +1,17 @@
+<div class="container">
+  <h2>Event Form</h2>
+  <form [formGroup]="eventForm" (ngSubmit)="onSubmit()">
+
+    <div class="form-floating mb-3">
+      <input type="text" class="form-control" id="name" formControlName="name" required>
+      <label for="name">Name</label>
+    </div>
+
+    <div class="form-floating mb-3">
+      <input type="text" class="form-control" id="address" formControlName="address" required>
+      <label for="address">Address</label>
+    </div>
+
+    <button type="submit" class="btn btn-primary" [disabled]="!eventForm.valid">Submit</button>
+  </form>
+</div>
