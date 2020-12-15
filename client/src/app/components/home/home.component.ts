@@ -3,6 +3,8 @@ import {PopUpService} from "../../services/pop-up/pop-up.service";
 import {Router} from "@angular/router";
 import {StructureService} from "../../services/structure/structure.service";
 import {Structure} from "../../models/structure/structure";
+import {EventService} from "../../services/event/event.service";
+import {Event} from "../../models/event/event";
 
 @Component({
   selector: 'app-home',
@@ -12,21 +14,36 @@ import {Structure} from "../../models/structure/structure";
 export class HomeComponent implements OnInit {
 
   structures: Structure[];
+  events: Event[];
 
   constructor(private popupService: PopUpService,
               private router: Router,
-              private structureService: StructureService) { }
+              private structureService: StructureService,
+              private eventService: EventService) { }
 
   ngOnInit(): void {
-    this.findAllStructure();
+    this.findAllStructures();
+    this.findAllEvents();
   }
 
   gotoAddStructure() {
     this.router.navigate(['/add/structure']);
   }
 
-  findAllStructure() {
-    this.structureService.findAll().subscribe(data => { this.structures = data });
+  gotoAddEvent() {
+    this.router.navigate(['/add/event']);
+  }
+
+  findAllStructures() {
+    this.structureService.findAll().subscribe(data => {
+      this.structures = data;
+    });
+  }
+
+  findAllEvents() {
+    this.eventService.findAll().subscribe(data => {
+      this.events = data;
+    });
   }
 
   toLowerCase(string: string) {

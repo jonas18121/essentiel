@@ -1,19 +1,22 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from "@angular/forms";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { MapComponent } from './components/map/map.component';
 
 import { MarkerService } from './services/marker/marker.service';
-import { HttpClientModule } from '@angular/common/http';
-
 import { PopUpService } from './services/pop-up/pop-up.service';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { MapComponent } from './components/map/map.component';
 import { AddStructureComponent } from './components/add-structure/add-structure.component';
 import { HomeComponent } from './components/home/home.component';
-import {ReactiveFormsModule} from "@angular/forms";
 import { ViewStructureComponent } from './components/view-structure/view-structure.component';
+import { AddEventComponent } from './components/add-event/add-event.component';
+import { ViewEventComponent } from './components/view-event/view-event.component';
+
 
 @NgModule({
   declarations: [
@@ -21,7 +24,9 @@ import { ViewStructureComponent } from './components/view-structure/view-structu
     MapComponent,
     AddStructureComponent,
     HomeComponent,
-    ViewStructureComponent
+    ViewStructureComponent,
+    AddEventComponent,
+    ViewEventComponent
   ],
   imports: [
     BrowserModule,

@@ -7,25 +7,25 @@ import {Structure} from "../../models/structure/structure";
   providedIn: 'root'
 })
 export class StructureService {
-  private readonly seriesUrl: string;
+  private readonly structureUrl: string;
 
   constructor(private http: HttpClient) {
-    this.seriesUrl = 'http://localhost:8080/api/structure/';
+    this.structureUrl = 'http://localhost:8080/api/structure/';
   }
 
   public findAll(): Observable<Structure[]> {
-    return this.http.get<Structure[]>(this.seriesUrl);
+    return this.http.get<Structure[]>(this.structureUrl);
   }
 
   public findById(structureId: number): Observable<Structure> {
-    return this.http.get<Structure>(this.seriesUrl + structureId);
+    return this.http.get<Structure>(this.structureUrl + structureId);
   }
 
   public save(structure: Structure): Observable<Structure> {
-    return this.http.post<Structure>(this.seriesUrl, structure);
+    return this.http.post<Structure>(this.structureUrl, structure);
   }
 
   public delete(structure: Structure): Observable<Structure> {
-    return this.http.delete<Structure>(this.seriesUrl + structure.id);
+    return this.http.delete<Structure>(this.structureUrl + structure.id);
   }
 }
