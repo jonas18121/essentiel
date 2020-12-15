@@ -32,4 +32,8 @@ export class HomeComponent implements OnInit {
   toLowerCase(string: string) {
     return string.toLowerCase();
   }
+
+  encodeUri(uri: string) {
+    return encodeURI(uri);
+  }
 }

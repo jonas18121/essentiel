@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -62,6 +64,18 @@ public class EventController {
     @PostMapping // Map ONLY POST Requests
     @ResponseStatus(HttpStatus.CREATED)
     public Event create(@RequestBody Event event) {
+        try {
+            FileWriter myWriter = new FileWriter("docs/évènements/" + event.getName().toLowerCase() + ".md");
+            myWriter.write("## Présentation de l'évènement\n");
+            myWriter.write("- Adresse : " + event.getAddress() + "\n");
+            myWriter.write("\n");
+            myWriter.write("*Ajouté le : " + event.getCreatedAt() + "*\n");
+            myWriter.close();
+            System.out.println("Successfully wrote to the file.");
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
         return repository.save(event);
     }
 
