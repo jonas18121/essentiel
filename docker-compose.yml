@@ -1,0 +1,14 @@
+version: "3"
+services:
+  client:
+    build: ./client
+    ports:
+      - "80:4200"
+    # volumes:
+    #   - "./client:/app"
+    links:
+      - "server"
+  server:
+    image: docker.pkg.github.com/alcinae/essentiel/server 
+    ports:
+      - "8080:8080"
