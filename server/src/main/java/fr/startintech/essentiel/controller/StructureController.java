@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
@@ -17,7 +16,7 @@ import java.util.List;
  * Structure REST Controller
  */
 @RestController // This means that this class is a Controller
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping(path="/api/structure") // This means URL's start with /api (after Application path)
 public class StructureController {
     @Autowired  // This means to get the bean called StructureRepository

@@ -14,7 +14,7 @@ import java.util.List;
  * User REST Controller
  */
 @RestController // This means that this class is a Controller
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping(path="/api/user") // This means URL's start with /api (after Application path)
 public class UserController {
     @Autowired  // This means to get the bean called UserRepository

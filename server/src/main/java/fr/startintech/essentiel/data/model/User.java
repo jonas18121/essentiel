@@ -1,39 +1,73 @@
 package fr.startintech.essentiel.data.model;
 
+import org.hibernate.annotations.NaturalId;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import javax.persistence.*;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * User entity.
  */
 @Entity
-@Table(name = "User")
-public class User {
+@Table(name = "User", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {
+                "username"
+        }),
+        @UniqueConstraint(columnNames = {
+                "email"
+        })
+})public class User {
     /**
      * User identifier.
      */
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    /**
+     * User name.
+     */
+    @NotBlank
+    @Size(min=3, max = 50)
+    private String name;
+
+    /**
+     * User pseudo.
+     */
+    @NotBlank
+    @Size(min=3, max = 50)
+    private String username;
 
     /**
      * User email which serve as login credential.
      */
-    @Column(name = "email", nullable = false)
+    @NaturalId
+    @NotBlank
+    @Size(max = 50)
+    @Email
     private String email;
 
     /**
      * User password.
      */
-    @Column(name = "password", nullable = true)
+    @NotBlank
+    @Size(min=6, max = 100)
     private String password;
 
     /**
      * User role.
      */
-    @Column(name = "role", nullable = true)
-    private String role;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles = new HashSet<>();
 
     /**
      * User linked structures.
@@ -44,14 +78,24 @@ public class User {
     }) private Map<Integer, Structure> structures = new HashMap<Integer, Structure>();
 
     /**
-     * User roles array.
+     * User empty constructor.
      */
-    private static final String[] roles = {"administrator", "moderator", "contributor"};
+    public User() { }
+
 
     /**
      * User constructor.
+     * @param name
+     * @param username
+     * @param email
+     * @param password
      */
-    public User() { }
+    public User(String name, String username, String email, String password) {
+        this.name = name;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+    }
 
     /**
      * @return User id.
@@ -65,6 +109,34 @@ public class User {
      */
     public void setId(Long id) {
         this.id = id;
+    }
+
+    /**
+     * @return
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * @param name
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
+     * @return
+     */
+    public String getUsername() {
+        return username;
+    }
+
+    /**
+     * @param username
+     */
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     /**
@@ -98,35 +170,15 @@ public class User {
     /**
      * @return User role.
      */
-    public String getRole() {
-        return role;
-    }
-
-    /**
-     * @param role User role to set.
-     * @throws Exception Throws an exception if the role does not match to any role in the roles array.
-     */
-    public void setRole(String role) throws Exception {
-        switch (role) {
-            case "admin", "administrator" -> this.role = roles[0];
-            case "modo", "moderator" -> this.role = roles[1];
-            case "user", "contributor" -> this.role = roles[2];
-            default -> throw new Exception();
-        }
+    public Set<Role> getRoles() {
+        return roles;
     }
 
     /**
      * User type to set from the roles array.
-     * @param roleId Position id in the roles array.
-     * @throws Exception Throws an exception if id doesnt match.
      */
-    public void setRole(int roleId) throws Exception {
-        switch (roleId) {
-            case 1 -> this.role = roles[0];
-            case 2 -> this.role = roles[1];
-            case 3 -> this.role = roles[2];
-            default -> throw new Exception();
-        }
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 
     /**
@@ -142,4 +194,5 @@ public class User {
     public void setStructures(Map<Integer, Structure> structures) {
         this.structures = structures;
     }
+
 }
