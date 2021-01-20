@@ -26,18 +26,54 @@ public class Event {
     private String name;
 
     /**
-     * Event start time.
+     * Event date
      */
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "start_time", nullable = true)
-    private Date startTime;
+    @Column(name = "date", nullable = true)
+    private Date date;
 
     /**
-     * Event end time.
+     * Event hour.
      */
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "end_time", nullable = true)
-    private Date endTime;
+    @Column(name = "hour", nullable = false)
+    private String hour;
+
+    /**
+     * Event street.
+     */
+    @Column(name = "street", nullable = false)
+    private String street;
+
+    /**
+     * Event city.
+     */
+    @Column(name = "city", nullable = false)
+    private String city;
+
+    /**
+     * Event zip.
+     */
+    @Column(name = "zip", nullable = false)
+    private String zip;
+
+    /**
+     * Event structure organizer.
+     */
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "structure_id")
+    private Structure organizer;
+
+    /**
+     * Event public.
+     */
+    @Column(name = "public", nullable = false)
+    private String public;
+
+    /**
+     * Event price.
+     */
+    @Column(name = "price", nullable = false)
+    private String price;
 
     /**
      * Event created time.
@@ -54,19 +90,6 @@ public class Event {
     @Column(name = "updated_at", nullable = true)
     @LastModifiedDate
     private Date updatedAt;
-
-    /**
-     * Event address.
-     */
-    @Column(name = "address", nullable = true)
-    private String address;
-
-    /**
-     * Event structure organizer.
-     */
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "structure_id")
-    private Structure organizer;
 
     /**
      * Event constructor.

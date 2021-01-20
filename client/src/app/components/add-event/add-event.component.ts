@@ -15,7 +15,14 @@ export class AddEventComponent implements OnInit {
 
   eventForm = this.fb.group({
     name: [''],
-    address: ['']
+    date: [''],
+    hour: [''],
+    street: [''],
+    city: [''],
+    zip: [''],
+    structure: [''],
+    public: [''],
+    price: ['']
   });
 
   constructor(

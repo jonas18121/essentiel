@@ -1,17 +1,76 @@
 <div class="container">
-  <h2>Structure Form</h2>
-  <form [formGroup]="structureForm" (ngSubmit)="onSubmit()">
+  <h1 class="mt-2">Formulaire stucture</h1>
+  <form class="mb-3" [formGroup]="structureForm" (ngSubmit)="onSubmit()">
 
-    <div class="form-floating mb-3">
-      <input type="text" class="form-control" id="name" formControlName="name" required>
-      <label for="name">Name</label>
+
+    <h2>Informations</h2>
+
+    <div class="form-group">
+      <input type="text" class="form-control" id="name" formControlName="name" placeholder="Nom de la structure">
     </div>
 
-    <div class="form-floating mb-3">
-      <input type="text" class="form-control" id="address" formControlName="address" required>
-      <label for="address">Address</label>
+    <div class="form-group">
+      <input type="text" class="form-control" id="type" formControlName="type" placeholder="Type de structure">
     </div>
 
-    <button type="submit" class="btn btn-primary" [disabled]="!structureForm.valid">Submit</button>
+    <hr>
+    <h2>Adresse</h2>
+
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <input type="text" class="form-control" id="street" formControlName="street" placeholder="Rue">
+      </div>
+      <div class="form-group col-md-4">
+        <input type="text" class="form-control" id="city" formControlName="city" placeholder="Ville">
+      </div>
+      <div class="form-group col-md-2">
+        <input type="text" class="form-control" id="zip" formControlName="zip" placeholder="Code Postal" pattern="[0-9]{5}">
+      </div>
+    </div>
+
+
+    <hr>
+    <h2>Description</h2>
+
+    <div class="form-group">
+      <textarea class="form-control" id="description" formControlName="description" rows="3">Description en cours de rédaction...</textarea>
+    </div>
+
+
+    <hr>
+    <h2>Responsable</h2>
+
+    <div class="row">
+      <div class="col">
+        <input type="text" class="form-control" id="contactName" formControlName="contactName" placeholder="Nom du contact">
+      </div>
+      <div class="col">
+        <input type="text" class="form-control" id="contactFunction" formControlName="contactFunction" placeholder="Fonction du contact">
+      </div>
+    </div>
+
+
+    <hr>
+    <h2>Contacts</h2>
+
+    <div class="form-group">
+      <label for="phone">Téléphone</label>
+      <input type="tel" class="form-control" id="phone" formControlName="phone" placeholder="000000000" pattern="[0-9]{2}[0-9]{2}[0-9]{2}[0-9]{2}[0-9]{2}">
+    </div>
+
+    <div class="form-group">
+      <label for="email">Adresse mail</label>
+      <input type="email" class="form-control" id="email" formControlName="email" placeholder="name@example.com">
+    </div>
+
+    <hr>
+    <h2>Agrément / label</h2>
+
+    <div class="form-group">
+      <input type="text" class="form-control" id="label" formControlName="id" placeholder="Agrément / label de la structure">
+    </div>
+
+    <button type="submit" class="btn btn-primary" [disabled]="!structureForm.valid">Ajouter</button>
+
   </form>
 </div>

@@ -38,6 +38,44 @@ public class Structure {
     private String type;
 
     /**
+     * Structure description.
+     */
+    @Column(name = "description", nullable = true)
+    private String description;
+
+    /**
+     * Structure contactName.
+     */
+    @Column(name = "contactName", nullable = true)
+    private String contactName;
+
+    /**
+     * Structure contactFunction.
+     */
+    @Column(name = "contactFunction", nullable = true)
+    private String contactFunction;
+
+    /**
+     * Structure phone.
+     */
+    @Column(name = "phone", nullable = true)
+    private String phone;
+
+    /**
+     * Structure email.
+     */
+    @Column(name = "email", nullable = true)
+    private String email;
+
+    /**
+     * Structure label.
+     */
+    @Column(name = "label", nullable = true)
+    private String label;
+
+
+
+    /**
      * Structure longitude coordinates.
      */
     @Column(name = "longitude", nullable = true)
@@ -107,20 +145,6 @@ public class Structure {
     }
 
     /**
-     * @return Structure address.
-     */
-    public String getAddress() {
-        return address;
-    }
-
-    /**
-     * @param address Structure address to set.
-     */
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    /**
      * @return Structure type.
      */
     public String getType() {
@@ -139,6 +163,133 @@ public class Structure {
             case 3 -> this.type = types[2];
             default -> throw new Exception();
         }
+    }
+
+    
+    /**
+     * @return Structure street.
+     */
+    public Long getStreet() {
+        return street;
+    }
+
+    /**
+     * @param id Structure street to set.
+     */
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    /**
+     * @return Structure city.
+     */
+    public Long getCity() {
+        return city;
+    }
+
+    /**
+     * @param id Structure id to set.
+     */
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    /**
+     * @return Structure zip.
+     */
+    public Long getZip() {
+        return zip;
+    }
+
+    /**
+     * @param id Structure zip to set.
+     */
+    public void setZip(String zip) {
+        this.zip = zip;
+    }
+
+    /**
+     * @return Structure description.
+     */
+    public Long getDescription() {
+        return description;
+    }
+
+    /**
+     * @param id Structure description to set.
+     */
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    /**
+     * @return Structure contactName.
+     */
+    public Long getContactName() {
+        return contactName;
+    }
+
+    /**
+     * @param id Structure contactName to set.
+     */
+    public void setContactName(String contactName) {
+        this.contactName = contactName;
+    }
+
+    /**
+     * @return Structure contactFunction.
+     */
+    public Long getContactFunction() {
+        return contactFunction;
+    }
+
+    /**
+     * @param id Structure contactFunction to set.
+     */
+    public void setContactFunction(String contactFunction) {
+        this.contactFunction = contactFunction;
+    }
+
+    /**
+     * @return Structure phone.
+     */
+    public Long getPhone() {
+        return phone;
+    }
+
+    /**
+     * @param id Structure phone to set.
+     */
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    /**
+     * @return Structure email.
+     */
+    public Long getEmail() {
+        return email;
+    }
+
+    /**
+     * @param id Structure email to set.
+     */
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    /**
+     * @return Structure label.
+     */
+    public Long getLabel() {
+        return label;
+    }
+
+    /**
+     * @param id Structure label to set.
+     */
+    public void setLabel(String label) {
+        this.label = label;
     }
 
     /**

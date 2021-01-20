@@ -18,7 +18,16 @@ export class AddStructureComponent implements OnInit {
 
   structureForm = this.fb.group({
     name: [''],
-    address: ['']
+    type: [''],
+    street: [''],
+    city: [''],
+    zip: [''],
+    description: [''],
+    contactName: [''],
+    contactFunction: [''],
+    phone: [''],
+    email: [''],
+    label: ['']
   });
 
   constructor(
