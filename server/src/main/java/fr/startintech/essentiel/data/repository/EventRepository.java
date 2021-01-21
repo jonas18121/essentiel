@@ -15,6 +15,6 @@ import java.util.List;
 public interface EventRepository extends CrudRepository<Event, Long> {
     Event findByName(String name);
     List<Event> findAll();
-    List<Event> findAllByAddress(String address);
+    List<Event> findAllByCity(String city);
     List<Event> findAllByOrganizer(Structure organizer);
 }

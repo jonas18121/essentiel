@@ -64,17 +64,19 @@ public class StructureController {
     @PostMapping // Map ONLY POST Requests
     @ResponseStatus(HttpStatus.CREATED)
     public Structure create(@RequestBody Structure structure) {
-        try {
-            FileWriter myWriter = new FileWriter("docs/structures/" + structure.getName().toLowerCase() + ".md");
-            myWriter.write("## Présentation de la structure\n");
-            myWriter.write("- Adresse : " + structure.getAddress() + "\n");
-            myWriter.write("\n");
-            myWriter.write("*Ajoutée le : " + structure.getCreatedAt() + "*\n");
-            myWriter.close();
-            System.out.println("Successfully wrote to the file.");
-        } catch (IOException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
+        if (structure.getName() != null && !structure.getName().isBlank()) {
+            try {
+                FileWriter myWriter = new FileWriter("docs/structures/" + structure.getName().toLowerCase() + ".md");
+                myWriter.write("## Présentation de la structure\n");
+                myWriter.write("- Adresse : " + structure.getAddress() + "\n");
+                myWriter.write("\n");
+                myWriter.write("*Ajoutée le : " + structure.getCreatedAt() + "*\n");
+                myWriter.close();
+                System.out.println("Successfully wrote to the file.");
+            } catch (IOException e) {
+                System.out.println("An error occurred.");
+                e.printStackTrace();
+            }
         }
         return repository.save(structure);
     }

@@ -73,8 +73,6 @@ public class Structure {
     @Column(name = "label", nullable = true)
     private String label;
 
-
-
     /**
      * Structure longitude coordinates.
      */
@@ -165,179 +163,96 @@ public class Structure {
         }
     }
 
-    
-    /**
-     * @return Structure street.
-     */
-    public Long getStreet() {
-        return street;
+
+    public String getAddress() {
+        return address;
     }
 
-    /**
-     * @param id Structure street to set.
-     */
-    public void setStreet(String street) {
-        this.street = street;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    /**
-     * @return Structure city.
-     */
-    public Long getCity() {
-        return city;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    /**
-     * @param id Structure id to set.
-     */
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    /**
-     * @return Structure zip.
-     */
-    public Long getZip() {
-        return zip;
-    }
-
-    /**
-     * @param id Structure zip to set.
-     */
-    public void setZip(String zip) {
-        this.zip = zip;
-    }
-
-    /**
-     * @return Structure description.
-     */
-    public Long getDescription() {
+    public String getDescription() {
         return description;
     }
 
-    /**
-     * @param id Structure description to set.
-     */
     public void setDescription(String description) {
         this.description = description;
     }
 
-    /**
-     * @return Structure contactName.
-     */
-    public Long getContactName() {
+    public String getContactName() {
         return contactName;
     }
 
-    /**
-     * @param id Structure contactName to set.
-     */
     public void setContactName(String contactName) {
         this.contactName = contactName;
     }
 
-    /**
-     * @return Structure contactFunction.
-     */
-    public Long getContactFunction() {
+    public String getContactFunction() {
         return contactFunction;
     }
 
-    /**
-     * @param id Structure contactFunction to set.
-     */
     public void setContactFunction(String contactFunction) {
         this.contactFunction = contactFunction;
     }
 
-    /**
-     * @return Structure phone.
-     */
-    public Long getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    /**
-     * @param id Structure phone to set.
-     */
     public void setPhone(String phone) {
         this.phone = phone;
     }
 
-    /**
-     * @return Structure email.
-     */
-    public Long getEmail() {
+    public String getEmail() {
         return email;
     }
 
-    /**
-     * @param id Structure email to set.
-     */
     public void setEmail(String email) {
         this.email = email;
     }
 
-    /**
-     * @return Structure label.
-     */
-    public Long getLabel() {
+    public String getLabel() {
         return label;
     }
 
-    /**
-     * @param id Structure label to set.
-     */
     public void setLabel(String label) {
         this.label = label;
     }
 
-    /**
-     * @return Structure longitude.
-     */
     public String getLongitude() {
         return longitude;
     }
 
-    /**
-     * @param longitude Structure longitude to set.
-     */
     public void setLongitude(String longitude) {
         this.longitude = longitude;
     }
 
-    /**
-     * @return Structure latitude.
-     */
     public String getLatitude() {
         return latitude;
     }
 
-    /**
-     * @param latitude Structure latitude to set.
-     */
     public void setLatitude(String latitude) {
         this.latitude = latitude;
     }
 
-    /**
-     * @return Structure last update time.
-     */
     public Date getUpdatedAt() {
         return updatedAt;
     }
 
-    /**
-     * @param updatedAt Structure last update time to set.
-     */
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
     }
 
-    /**
-     * @return Structure created_at time.
-     */
     public Date getCreatedAt() {
         return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 }

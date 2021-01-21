@@ -64,17 +64,19 @@ public class EventController {
     @PostMapping // Map ONLY POST Requests
     @ResponseStatus(HttpStatus.CREATED)
     public Event create(@RequestBody Event event) {
-        try {
-            FileWriter myWriter = new FileWriter("docs/évènements/" + event.getName().toLowerCase() + ".md");
-            myWriter.write("## Présentation de l'évènement\n");
-            myWriter.write("- Adresse : " + event.getAddress() + "\n");
-            myWriter.write("\n");
-            myWriter.write("*Ajouté le : " + event.getCreatedAt() + "*\n");
-            myWriter.close();
-            System.out.println("Successfully wrote to the file.");
-        } catch (IOException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
+        if (event.getName() != null && !event.getName().isBlank()) {
+            try {
+                FileWriter myWriter = new FileWriter("docs/évènements/" + event.getName().toLowerCase() + ".md");
+                myWriter.write("## Présentation de l'évènement\n");
+                myWriter.write("- Adresse : " + event.getCity() + "\n");
+                myWriter.write("\n");
+                myWriter.write("*Ajouté le : " + event.getCreatedAt() + "*\n");
+                myWriter.close();
+                System.out.println("Successfully wrote to the file.");
+            } catch (IOException e) {
+                System.out.println("An error occurred.");
+                e.printStackTrace();
+            }
         }
         return repository.save(event);
     }

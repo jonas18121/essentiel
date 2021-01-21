@@ -4,6 +4,7 @@ import org.hibernate.annotations.NaturalId;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.persistence.*;
 import java.util.HashMap;
@@ -47,9 +48,10 @@ import java.util.Set;
     /**
      * User email which serve as login credential.
      */
-    @NaturalId
+    @NaturalId(mutable=true)
     @NotBlank
     @Size(max = 50)
+    @Column(nullable = false)
     @Email
     private String email;
 
@@ -63,7 +65,7 @@ import java.util.Set;
     /**
      * User role.
      */
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))

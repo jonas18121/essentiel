@@ -35,25 +35,25 @@ public class Event {
     /**
      * Event hour.
      */
-    @Column(name = "hour", nullable = false)
+    @Column(name = "hour", nullable = true)
     private String hour;
 
     /**
      * Event street.
      */
-    @Column(name = "street", nullable = false)
+    @Column(name = "street", nullable = true)
     private String street;
 
     /**
      * Event city.
      */
-    @Column(name = "city", nullable = false)
+    @Column(name = "city", nullable = true)
     private String city;
 
     /**
      * Event zip.
      */
-    @Column(name = "zip", nullable = false)
+    @Column(name = "zip", nullable = true)
     private String zip;
 
     /**
@@ -66,13 +66,13 @@ public class Event {
     /**
      * Event public.
      */
-    @Column(name = "public", nullable = false)
-    private String public;
+    @Column(name = "audience", nullable = true)
+    private String audience;
 
     /**
      * Event price.
      */
-    @Column(name = "price", nullable = false)
+    @Column(name = "price", nullable = true)
     private String price;
 
     /**
@@ -113,94 +113,91 @@ public class Event {
         this.id = id;
     }
 
-    /**
-     * @return Event name.
-     */
     public String getName() {
         return name;
     }
 
-    /**
-     * @param name Event name to set.
-     */
     public void setName(String name) {
         this.name = name;
     }
 
-    /**
-     * @return Event start time.
-     */
-    public Date getStartTime() {
-        return startTime;
+    public Date getDate() {
+        return date;
     }
 
-    /**
-     * @param startTime Event start time to set.
-     */
-    public void setStartTime(Date startTime) {
-        this.startTime = startTime;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
-    /**
-     * @return Event end time.
-     */
-    public Date getEndTime() {
-        return endTime;
+    public String getHour() {
+        return hour;
     }
 
-    /**
-     * @param endTime Event end time to set.
-     */
-    public void setEndTime(Date endTime) {
-        this.endTime = endTime;
+    public void setHour(String hour) {
+        this.hour = hour;
     }
 
-    /**
-     * @return Event created_at time.
-     */
-    public Date getCreatedAt() {
-        return createdAt;
+    public String getStreet() {
+        return street;
     }
 
-    /**
-     * @return Event last update time.
-     */
-    public Date getUpdatedAt() {
-        return updatedAt;
+    public void setStreet(String street) {
+        this.street = street;
     }
 
-    /**
-     * @param updatedAt Event last update time to set.
-     */
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
+    public String getCity() {
+        return city;
     }
 
-    /**
-     * @return Event address.
-     */
-    public String getAddress() {
-        return address;
+    public void setCity(String city) {
+        this.city = city;
     }
 
-    /**
-     * @param address Event address to set.
-     */
-    public void setAddress(String address) {
-        this.address = address;
+    public String getZip() {
+        return zip;
     }
 
-    /**
-     * @return Structure organizer
-     */
+    public void setZip(String zip) {
+        this.zip = zip;
+    }
+
     public Structure getOrganizer() {
         return organizer;
     }
 
-    /**
-     * @param organizer Structure organizer to set.
-     */
     public void setOrganizer(Structure organizer) {
         this.organizer = organizer;
+    }
+
+    public String getAudience() {
+        return audience;
+    }
+
+    public void setAudience(String audience) {
+        this.audience = audience;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }
