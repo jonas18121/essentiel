@@ -6,6 +6,7 @@ import fr.startintech.essentiel.exeption.IdMismatchException;
 import fr.startintech.essentiel.exeption.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,6 +27,7 @@ public class UserController {
      * @return a list of Users
      */
     @GetMapping // Map ONLY GET Requests
+    @PreAuthorize("hasRole('ADMIN')")
     public List<User> findAll() {
         // This returns a JSON or XML with the users
         return repository.findAll();
@@ -37,6 +39,7 @@ public class UserController {
      * @return called user
      */
     @GetMapping("/email/{userEmail}") // Map ONLY GET Requests
+    @PreAuthorize("hasRole('ADMIN')")
     public User findByName(@PathVariable String userEmail) {
         // @PathVariable means it is a parameter from path
         return repository.findByEmail(userEmail);
@@ -49,6 +52,7 @@ public class UserController {
      * @throws NotFoundException
      */
     @GetMapping("/{id}") // Map ONLY GET Requests
+    @PreAuthorize("hasRole('ADMIN')")
     public User findById(@PathVariable Long id) throws NotFoundException {
         return repository.findById(id)
                 .orElseThrow(NotFoundException::new);
@@ -66,6 +70,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public void delete(@PathVariable Long id) throws NotFoundException {
         repository.findById(id)
                 .orElseThrow(NotFoundException::new);
@@ -76,6 +81,7 @@ public class UserController {
      * Delete all users
      */
     @DeleteMapping // Map ONLY DELETE Requests
+    @PreAuthorize("hasRole('ADMIN')")
     public void deleteAll() {
         repository.deleteAll();
     }
@@ -89,6 +95,7 @@ public class UserController {
      * @throws NotFoundException
      */
     @PutMapping("/{id}") // Map ONLY PUT Requests
+    @PreAuthorize("hasRole('USER') or hasRole('PM') or hasRole('ADMIN')")
     public User update(@RequestBody User user, @PathVariable Long id) throws IdMismatchException, NotFoundException {
         // @ResponseBody means the returned String is the response, not a view name
         // @RequestParam means it is a parameter from the GET or POST request
