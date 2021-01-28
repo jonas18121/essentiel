@@ -3,6 +3,7 @@ import { Event } from "../../models/event/event";
 import { Router } from "@angular/router";
 import { FormBuilder, ReactiveFormsModule} from "@angular/forms";
 import { EventService } from "../../services/event/event.service";
+import {TokenStorageService} from "../../services/auth/token-storage.service";
 
 @Component({
   selector: 'app-add-event',
@@ -12,6 +13,8 @@ import { EventService } from "../../services/event/event.service";
 export class AddEventComponent implements OnInit {
 
   result: any;
+  roles: string[];
+  authority: string;
 
   eventForm = this.fb.group({
     name: [''],
@@ -28,10 +31,29 @@ export class AddEventComponent implements OnInit {
   constructor(
     private router: Router,
     private eventService: EventService,
-    private fb: FormBuilder) {
+    private fb: FormBuilder,
+    private tokenStorage: TokenStorageService) {
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.tokenStorage.getToken()) {
+      this.roles = this.tokenStorage.getAuthorities();
+      this.roles.every(role => {
+        if (role === 'ROLE_ADMIN') {
+          this.authority = 'admin';
+          return false;
+        } else if (role === 'ROLE_PM') {
+          this.authority = 'pm';
+          return false;
+        }
+        this.authority = 'user';
+        return true;
+      });
+    }
+    if (!this.authority) {
+      this.gotoHome();
+    }
+  }
 
   onSubmit(): void {
     let eventToAdd = new Event();
