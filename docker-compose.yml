@@ -8,7 +8,41 @@ services:
     #   - "./client:/app"
     links:
       - "server"
+    restart:
+      always
+
   server:
     image: docker.pkg.github.com/alcinae/essentiel/server 
+    links:
+      - "client"
+    restart:
+      always
+
+  mysql:
+    networks: 
+        - "database"
+    build:
+        context: db
+        dockerfile: dockerfile
+    env_file:
+        - ./docker.env #TODO: Change credentials
+    environment:
+        MYSQL_RANDOM_ROOT_PASSWORD: "yes"
+        MYSQL_DATABASE: "db"
+    volumes:
+        - "db"
+    restart: 
+        always
+    
+  doc:
+    build: dockerfile_docs
     ports:
-      - "8080:8080"
+      
+    restart:
+      always
+
+networks:
+  database:
+
+volume:
+  db:
