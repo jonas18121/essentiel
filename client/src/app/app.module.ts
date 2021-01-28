@@ -19,7 +19,6 @@ import { ViewEventComponent } from './components/view-event/view-event.component
 import { HeaderComponent } from './components/header/header.component';
 import { LoginComponent } from './components/login/login.component';
 import {RegisterComponent} from "./components/register/register.component";
-import { LogoutComponent } from './components/logout/logout.component';
 
 
 @NgModule({
@@ -33,8 +32,7 @@ import { LogoutComponent } from './components/logout/logout.component';
     ViewEventComponent,
     HeaderComponent,
     LoginComponent,
-    RegisterComponent,
-    LogoutComponent
+    RegisterComponent
   ],
     imports: [
         BrowserModule,

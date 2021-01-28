@@ -21,7 +21,7 @@
         <a class="nav-link" routerLink="login">Login</a>
       </li>
       <li *ngIf="authority" class="nav-item">
-        <a class="nav-link" routerLink="logout">Déconnexion</a>
+        <button class="nav-link" (click)="logout()" style="background: none;border: none;cursor: pointer;outline: inherit;">Déconnexion</button>
       </li>
     </ul>
   </div>

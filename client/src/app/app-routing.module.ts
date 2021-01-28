@@ -7,7 +7,6 @@ import {AddEventComponent} from "./components/add-event/add-event.component";
 import {ViewEventComponent} from "./components/view-event/view-event.component";
 import {RegisterComponent} from "./components/register/register.component";
 import {LoginComponent} from "./components/login/login.component";
-import {LogoutComponent} from "./components/logout/logout.component";
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent},
@@ -17,7 +16,6 @@ const routes: Routes = [
   { path: 'event/:eventName/:eventId', component: ViewEventComponent },
   { path: 'login', component: LoginComponent},
   { path: 'signup', component: RegisterComponent},
-  { path: 'logout', component: LogoutComponent },
   { path: '',   redirectTo: '/home', pathMatch: 'full' }, // redirect to `home`
 ];
 
