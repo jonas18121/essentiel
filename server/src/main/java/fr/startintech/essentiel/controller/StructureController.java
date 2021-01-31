@@ -6,6 +6,7 @@ import fr.startintech.essentiel.exeption.IdMismatchException;
 import fr.startintech.essentiel.exeption.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.FileWriter;
@@ -28,6 +29,7 @@ public class StructureController {
      * @return a list of Structures
      */
     @GetMapping // Map ONLY GET Requests
+    @PreAuthorize("hasRole('USER') or hasRole('PM') or hasRole('ADMIN')")
     public List<Structure> findAll() {
         // This returns a JSON or XML with the structures
         return repository.findAll();
@@ -39,6 +41,7 @@ public class StructureController {
      * @return called structure
      */
     @GetMapping("/name/{structureName}") // Map ONLY GET Requests
+    @PreAuthorize("hasRole('USER') or hasRole('PM') or hasRole('ADMIN')")
     public Structure findByName(@PathVariable String structureName) {
         // @PathVariable means it is a parameter from path
         return repository.findByName(structureName);
@@ -51,6 +54,7 @@ public class StructureController {
      * @throws NotFoundException
      */
     @GetMapping("/{id}") // Map ONLY GET Requests
+    @PreAuthorize("hasRole('USER') or hasRole('PM') or hasRole('ADMIN')")
     public Structure findById(@PathVariable Long id) throws NotFoundException {
         return repository.findById(id)
                 .orElseThrow(NotFoundException::new);
@@ -62,6 +66,7 @@ public class StructureController {
      * @return created structure
      */
     @PostMapping // Map ONLY POST Requests
+    @PreAuthorize("hasRole('USER') or hasRole('PM') or hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
     public Structure create(@RequestBody Structure structure) {
         if (structure.getName() != null && !structure.getName().isBlank()) {
@@ -82,6 +87,7 @@ public class StructureController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('USER') or hasRole('PM') or hasRole('ADMIN')")
     public void delete(@PathVariable Long id) throws NotFoundException {
         repository.findById(id)
                 .orElseThrow(NotFoundException::new);
@@ -92,6 +98,7 @@ public class StructureController {
      * Delete all structures
      */
     @DeleteMapping // Map ONLY DELETE Requests
+    @PreAuthorize("hasRole('ADMIN')")
     public void deleteAll() {
         repository.deleteAll();
     }
@@ -105,6 +112,7 @@ public class StructureController {
      * @throws NotFoundException
      */
     @PutMapping("/{id}") // Map ONLY PUT Requests
+    @PreAuthorize("hasRole('USER') or hasRole('PM') or hasRole('ADMIN')")
     public Structure updateStructure(@RequestBody Structure structure, @PathVariable Long id) throws IdMismatchException, NotFoundException {
         // @ResponseBody means the returned String is the response, not a view name
         // @RequestParam means it is a parameter from the GET or POST request
