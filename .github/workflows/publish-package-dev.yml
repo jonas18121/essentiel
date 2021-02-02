@@ -43,11 +43,11 @@ jobs:
 
       - name: 🏷 Tag the client Docker image
         run: |
-          docker tag $CLIENT_REPOSITORY:latest $CLIENT_REPOSITORY:dev/beta
+          docker tag $CLIENT_REPOSITORY:latest $CLIENT_REPOSITORY:beta
 
       - name: 🚀 Push client Docker image to Github package registry
         run: |
-          docker push $CLIENT_REPOSITORY:dev/beta
+          docker push $CLIENT_REPOSITORY:beta
           
       # Server package
       - name: 🏗 Build the server Docker image
@@ -57,8 +57,8 @@ jobs:
 
       - name: 🏷 Tag the server Docker image
         run: |
-          docker tag $SERVER_REPOSITORY:latest $SERVER_REPOSITORY:dev/beta
+          docker tag $SERVER_REPOSITORY:latest $SERVER_REPOSITORY:beta
 
       - name: 🚀 Push server Docker image to Github package registry
         run: |
-          docker push $SERVER_REPOSITORY:dev/beta
+          docker push $SERVER_REPOSITORY:beta
