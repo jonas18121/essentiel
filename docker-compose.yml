@@ -1,29 +1,30 @@
 version: "3"
 services:
   client:
-    build: ./client
+    image: docker.pkg.github.com/alcinae/essentiel/client:beta
     ports:
       - "80:4200"
     # volumes:
     #   - "./client:/app"
-    links:
-      - "server"
+    networks:
+      - "api"
     restart:
       always
 
   server:
-    image: docker.pkg.github.com/alcinae/essentiel/server 
-    links:
-      - "client"
+    image: docker.pkg.github.com/alcinae/essentiel/server:beta 
+    networks:
+      - "api"
+      - "database"
     restart:
       always
 
   mysql:
-    networks: 
-        - "database"
     build:
         context: db
         dockerfile: dockerfile
+    networks: 
+        - "database"
     env_file:
         - ./docker.env #TODO: Change credentials
     environment:
@@ -34,14 +35,15 @@ services:
     restart: 
         always
     
-  doc:
-    build: dockerfile_docs
-    ports:
+  # doc:
+  #   build: dockerfile_docs
+  #   ports:
       
-    restart:
-      always
+  #   restart:
+  #     always
 
 networks:
+  api:
   database:
 
 volume:
