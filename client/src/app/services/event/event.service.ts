@@ -30,7 +30,6 @@ export class EventService {
   public save(Event: Event): Observable<Event> {
     const header = new HttpHeaders().set('Authorization', this.tokenType + this.tokenService.getToken());
     const headers = { headers: header };
-    console.log(headers);
     return this.http.post<Event>(this.eventUrl, Event, headers);
   }
 

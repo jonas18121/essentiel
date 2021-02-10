@@ -57,6 +57,18 @@ public class Event {
     private String zip;
 
     /**
+     * Structure longitude coordinates.
+     */
+    @Column(name = "longitude", nullable = true)
+    private String longitude;
+
+    /**
+     * Structure latitude coordinates.
+     */
+    @Column(name = "latitude", nullable = true)
+    private String latitude;
+
+    /**
      * Event structure organizer.
      */
     @ManyToOne(cascade = CascadeType.ALL)
@@ -199,5 +211,21 @@ public class Event {
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
     }
 }

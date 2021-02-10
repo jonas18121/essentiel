@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
+import {Address} from "../../models/address/address";
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class GeolocalisationService {
     this.seriesUrl = 'https://nominatim.openstreetmap.org/';
   }
 
-  search(location: string): Observable<object> {
+  search(location: Address): Observable<object> {
     return this.http.get<object>(`${this.seriesUrl}?addressdetails=1&q=${location}&format=json&limit=1`,
       {
         responseType: 'json'
