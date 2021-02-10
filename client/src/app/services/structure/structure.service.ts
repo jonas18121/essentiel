@@ -1,31 +1,41 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Structure} from "../../models/structure/structure";
+import {TokenStorageService} from "../auth/token-storage.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class StructureService {
   private readonly structureUrl: string;
+  private tokenType  = 'Bearer ';
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private tokenService: TokenStorageService) {
     this.structureUrl = 'http://localhost:8080/api/structure/';
   }
 
   public findAll(): Observable<Structure[]> {
-    return this.http.get<Structure[]>(this.structureUrl);
+    const header = new HttpHeaders().set('Authorization', this.tokenType + this.tokenService.getToken());
+    const headers = { headers: header };
+    return this.http.get<Structure[]>(this.structureUrl, headers);
   }
 
   public findById(structureId: number): Observable<Structure> {
-    return this.http.get<Structure>(this.structureUrl + structureId);
+    const header = new HttpHeaders().set('Authorization', this.tokenType + this.tokenService.getToken());
+    const headers = { headers: header };
+    return this.http.get<Structure>(this.structureUrl + structureId, headers);
   }
 
   public save(structure: Structure): Observable<Structure> {
-    return this.http.post<Structure>(this.structureUrl, structure);
+    const header = new HttpHeaders().set('Authorization', this.tokenType + this.tokenService.getToken());
+    const headers = { headers: header };
+    return this.http.post<Structure>(this.structureUrl, structure, headers);
   }
 
   public delete(structure: Structure): Observable<Structure> {
-    return this.http.delete<Structure>(this.structureUrl + structure.id);
+    const header = new HttpHeaders().set('Authorization', this.tokenType + this.tokenService.getToken());
+    const headers = { headers: header };
+    return this.http.delete<Structure>(this.structureUrl + structure.id, headers);
   }
 }

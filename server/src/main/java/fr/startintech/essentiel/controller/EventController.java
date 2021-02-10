@@ -6,6 +6,7 @@ import fr.startintech.essentiel.exeption.IdMismatchException;
 import fr.startintech.essentiel.exeption.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.FileWriter;
@@ -16,7 +17,7 @@ import java.util.List;
  * Event REST Controller
  */
 @RestController // This means that this class is a Controller
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping(path="/api/event") // This means URL's start with /api (after Application path)
 public class EventController {
     @Autowired  // This means to get the bean called EventRepository
@@ -28,6 +29,7 @@ public class EventController {
      * @return a list of Events
      */
     @GetMapping // Map ONLY GET Requests
+    @PreAuthorize("hasRole('USER') or hasRole('PM') or hasRole('ADMIN')")
     public List<Event> findAll() {
         // This returns a JSON or XML with the events
         return repository.findAll();
@@ -39,6 +41,7 @@ public class EventController {
      * @return called event
      */
     @GetMapping("/name/{eventName}") // Map ONLY GET Requests
+    @PreAuthorize("hasRole('USER') or hasRole('PM') or hasRole('ADMIN')")
     public Event findByName(@PathVariable String eventName) {
         // @PathVariable means it is a parameter from path
         return repository.findByName(eventName);
@@ -51,6 +54,7 @@ public class EventController {
      * @throws NotFoundException
      */
     @GetMapping("/{id}") // Map ONLY GET Requests
+    @PreAuthorize("hasRole('USER') or hasRole('PM') or hasRole('ADMIN')")
     public Event findById(@PathVariable Long id) throws NotFoundException {
         return repository.findById(id)
                 .orElseThrow(NotFoundException::new);
@@ -62,24 +66,28 @@ public class EventController {
      * @return created event
      */
     @PostMapping // Map ONLY POST Requests
+    @PreAuthorize("hasRole('USER') or hasRole('PM') or hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
     public Event create(@RequestBody Event event) {
-        try {
-            FileWriter myWriter = new FileWriter("docs/évènements/" + event.getName().toLowerCase() + ".md");
-            myWriter.write("## Présentation de l'évènement\n");
-            myWriter.write("- Adresse : " + event.getAddress() + "\n");
-            myWriter.write("\n");
-            myWriter.write("*Ajouté le : " + event.getCreatedAt() + "*\n");
-            myWriter.close();
-            System.out.println("Successfully wrote to the file.");
-        } catch (IOException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
+        if (event.getName() != null && !event.getName().isBlank()) {
+            try {
+                FileWriter myWriter = new FileWriter("docs/évènements/" + event.getName().toLowerCase() + ".md");
+                myWriter.write("## Présentation de l'évènement\n");
+                myWriter.write("- Adresse : " + event.getCity() + "\n");
+                myWriter.write("\n");
+                myWriter.write("*Ajouté le : " + event.getCreatedAt() + "*\n");
+                myWriter.close();
+                System.out.println("Successfully wrote to the file.");
+            } catch (IOException e) {
+                System.out.println("An error occurred.");
+                e.printStackTrace();
+            }
         }
         return repository.save(event);
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('USER') or hasRole('PM') or hasRole('ADMIN')")
     public void delete(@PathVariable Long id) throws NotFoundException {
         repository.findById(id)
                 .orElseThrow(NotFoundException::new);
@@ -90,6 +98,7 @@ public class EventController {
      * Delete all events
      */
     @DeleteMapping // Map ONLY DELETE Requests
+    @PreAuthorize("hasRole('ADMIN')")
     public void deleteAll() {
         repository.deleteAll();
     }
@@ -103,6 +112,7 @@ public class EventController {
      * @throws NotFoundException
      */
     @PutMapping("/{id}") // Map ONLY PUT Requests
+    @PreAuthorize("hasRole('USER') or hasRole('PM') or hasRole('ADMIN')")
     public Event event(@RequestBody Event event, @PathVariable Long id) throws IdMismatchException, NotFoundException {
         // @ResponseBody means the returned String is the response, not a view name
         // @RequestParam means it is a parameter from the GET or POST request

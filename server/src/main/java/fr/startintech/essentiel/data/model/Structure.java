@@ -38,6 +38,42 @@ public class Structure {
     private String type;
 
     /**
+     * Structure description.
+     */
+    @Column(name = "description", nullable = true)
+    private String description;
+
+    /**
+     * Structure contactName.
+     */
+    @Column(name = "contactName", nullable = true)
+    private String contactName;
+
+    /**
+     * Structure contactFunction.
+     */
+    @Column(name = "contactFunction", nullable = true)
+    private String contactFunction;
+
+    /**
+     * Structure phone.
+     */
+    @Column(name = "phone", nullable = true)
+    private String phone;
+
+    /**
+     * Structure email.
+     */
+    @Column(name = "email", nullable = true)
+    private String email;
+
+    /**
+     * Structure label.
+     */
+    @Column(name = "label", nullable = true)
+    private String label;
+
+    /**
      * Structure longitude coordinates.
      */
     @Column(name = "longitude", nullable = true)
@@ -107,20 +143,6 @@ public class Structure {
     }
 
     /**
-     * @return Structure address.
-     */
-    public String getAddress() {
-        return address;
-    }
-
-    /**
-     * @param address Structure address to set.
-     */
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    /**
      * @return Structure type.
      */
     public String getType() {
@@ -141,52 +163,96 @@ public class Structure {
         }
     }
 
-    /**
-     * @return Structure longitude.
-     */
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getContactName() {
+        return contactName;
+    }
+
+    public void setContactName(String contactName) {
+        this.contactName = contactName;
+    }
+
+    public String getContactFunction() {
+        return contactFunction;
+    }
+
+    public void setContactFunction(String contactFunction) {
+        this.contactFunction = contactFunction;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
     public String getLongitude() {
         return longitude;
     }
 
-    /**
-     * @param longitude Structure longitude to set.
-     */
     public void setLongitude(String longitude) {
         this.longitude = longitude;
     }
 
-    /**
-     * @return Structure latitude.
-     */
     public String getLatitude() {
         return latitude;
     }
 
-    /**
-     * @param latitude Structure latitude to set.
-     */
     public void setLatitude(String latitude) {
         this.latitude = latitude;
     }
 
-    /**
-     * @return Structure last update time.
-     */
     public Date getUpdatedAt() {
         return updatedAt;
     }
 
-    /**
-     * @param updatedAt Structure last update time to set.
-     */
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
     }
 
-    /**
-     * @return Structure created_at time.
-     */
     public Date getCreatedAt() {
         return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 }

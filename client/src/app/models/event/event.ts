@@ -5,8 +5,12 @@ export class Event {
   name: string;
   startTime: Date;
   endTime: Date;
+  street: string;
+  city: string;
+  zip: string;
+  longitude: string;
+  latitude: string;
   createdAt: Date;
   updatedAt: Date;
-  address: string;
   organizer: Structure;
 }

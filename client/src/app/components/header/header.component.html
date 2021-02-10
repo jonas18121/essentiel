@@ -1,0 +1,28 @@
+<nav class="navbar navbar-expand-lg navbar-dark" id="navbar" style="z-index: 1000; background-color: rgb(67,83,175)">
+  <a class="navbar-brand" href="#">ESSentiel</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+
+    <ul class="nav navbar-nav" routerLinkActive="active">
+      <li class="nav-item"><a class="nav-link" routerLink="home">Carte</a></li>
+      <li class="nav-item"><a class="nav-link" href="http://localhost:8000" target="_blank">Wiki</a></li>
+      <li *ngIf="authority === 'user'" class="nav-item">
+        <a class="nav-link" routerLink="user">User Board</a>
+      </li>
+      <li *ngIf="authority === 'admin'" class="nav-item">
+        <a class="nav-link" routerLink="admin">Admin Board</a>
+      </li>
+      <li *ngIf="authority === 'pm'" class="nav-item">
+        <a class="nav-link" routerLink="pm">PM Board</a>
+      </li>
+      <li *ngIf="!authority" class="nav-item">
+        <a class="nav-link" routerLink="login">Login</a>
+      </li>
+      <li *ngIf="authority" class="nav-item">
+        <button class="nav-link" (click)="logout()" style="background: none;border: none;cursor: pointer;outline: inherit;">Déconnexion</button>
+      </li>
+    </ul>
+  </div>
+</nav>

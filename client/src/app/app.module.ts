@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -16,6 +16,9 @@ import { HomeComponent } from './components/home/home.component';
 import { ViewStructureComponent } from './components/view-structure/view-structure.component';
 import { AddEventComponent } from './components/add-event/add-event.component';
 import { ViewEventComponent } from './components/view-event/view-event.component';
+import { HeaderComponent } from './components/header/header.component';
+import { LoginComponent } from './components/login/login.component';
+import {RegisterComponent} from "./components/register/register.component";
 
 
 @NgModule({
@@ -26,15 +29,19 @@ import { ViewEventComponent } from './components/view-event/view-event.component
     HomeComponent,
     ViewStructureComponent,
     AddEventComponent,
-    ViewEventComponent
+    ViewEventComponent,
+    HeaderComponent,
+    LoginComponent,
+    RegisterComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    ReactiveFormsModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        ReactiveFormsModule,
+        FormsModule
+    ],
   providers: [
     MarkerService,
     PopUpService
