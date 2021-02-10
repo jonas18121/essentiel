@@ -15,7 +15,6 @@ export class GeolocalisationService {
   }
 
   search(location: Address): Observable<object> {
-    console.log(location);
     return this.http.get<object>(`${this.seriesUrl}?addressdetails=1&q=${location}&format=json&limit=1`,
       {
         responseType: 'json'
