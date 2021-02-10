@@ -12,7 +12,7 @@ export class EventService {
   private tokenType  = 'Bearer ';
 
   constructor(private http: HttpClient, private tokenService: TokenStorageService) {
-    this.eventUrl = 'http://localhost:8080/api/event/';
+    this.eventUrl = 'http://server:8080/api/event/';
   }
 
   public findAll(): Observable<Event[]> {

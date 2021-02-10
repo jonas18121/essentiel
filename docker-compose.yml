@@ -19,21 +19,21 @@ services:
     restart:
       always
 
-  mysql:
-    build:
-        context: db
-        dockerfile: dockerfile
-    networks: 
-        - "database"
-    env_file:
-        - ./docker.env #TODO: Change credentials
-    environment:
-        MYSQL_RANDOM_ROOT_PASSWORD: "yes"
-        MYSQL_DATABASE: "db"
-    volumes:
-        - "db"
-    restart: 
-        always
+#  mysql:
+#    build:
+#        context: db
+#        dockerfile: dockerfile
+#    networks: 
+#        - "database"
+#    env_file:
+#        - ./docker.env #TODO: Change credentials
+#    environment:
+#        MYSQL_RANDOM_ROOT_PASSWORD: "yes"
+#        MYSQL_DATABASE: "db"
+#    volumes:
+#        - "db"
+#    restart: 
+#        always
     
   # doc:
   #   build: dockerfile_docs
@@ -46,5 +46,5 @@ networks:
   api:
   database:
 
-volume:
+volumes:
   db:
