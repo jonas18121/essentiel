@@ -8,6 +8,7 @@
     <ul class="nav navbar-nav" routerLinkActive="active">
       <li class="nav-item"><a class="nav-link" routerLink="home">Carte</a></li>
       <li class="nav-item"><a class="nav-link" href="http://localhost:8000" target="_blank">Wiki</a></li>
+      <!--
       <li *ngIf="authority === 'user'" class="nav-item">
         <a class="nav-link" routerLink="user">User Board</a>
       </li>
@@ -17,6 +18,7 @@
       <li *ngIf="authority === 'pm'" class="nav-item">
         <a class="nav-link" routerLink="pm">PM Board</a>
       </li>
+      -->
       <li *ngIf="!authority" class="nav-item">
         <a class="nav-link" routerLink="login">Login</a>
       </li>
