@@ -1,7 +1,7 @@
 version: "3"
 services:
   client:
-    image: docker.pkg.github.com/alcinae/essentiel/client:beta
+    image: docker.pkg.github.com/alcinae/essentiel/client:beta-compose
     ports:
       - "80:4200"
     # volumes:
@@ -12,7 +12,7 @@ services:
       always
 
   server:
-    image: docker.pkg.github.com/alcinae/essentiel/server:beta 
+    image: docker.pkg.github.com/alcinae/essentiel/server:beta-compose
     networks:
       - "api"
       - "database"
