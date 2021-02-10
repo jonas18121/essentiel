@@ -68,7 +68,6 @@ export class AddEventComponent implements OnInit {
     currentAddress.postalcode = this.eventForm.value.zip;
     currentAddress.country = "France";
     this.searchLocation(currentAddress).subscribe(response => {
-      console.log(response);
       if (response[0]) {
         eventToAdd.longitude = response[0].lon;
         eventToAdd.latitude = response[0].lat;
