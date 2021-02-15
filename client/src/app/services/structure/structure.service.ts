@@ -12,7 +12,7 @@ export class StructureService {
   private tokenType  = 'Bearer ';
 
   constructor(private http: HttpClient, private tokenService: TokenStorageService) {
-    this.structureUrl = 'http://server:8080/api/structure/';
+    this.structureUrl = '/api/structure/';
   }
 
   public findAll(): Observable<Structure[]> {
