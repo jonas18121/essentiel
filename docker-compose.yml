@@ -29,6 +29,10 @@ services:
       # - CLIENT=http://client:4200
       # - SERVER=http://server:8080
       # - WIKI=http://wiki:8000
+    depends_on:
+      - client
+      - server
+      # - wiki
 
 #  database:
 #    build:
