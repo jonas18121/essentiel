@@ -15,6 +15,30 @@ services:
     restart:
       always
 
+  database:
+    build:
+      context: db
+    networks: 
+      - "database"
+    env_file:
+      - ./docker.env
+    environment:
+      MYSQL_RANDOM_ROOT_PASSWORD: "yes"
+      MYSQL_DATABASE: "essentiel"
+    volumes:
+      - "db"
+    restart: 
+      always
+
+  wiki:
+    build:
+      context: .
+      dockerfile: wiki/Dockerfile
+    networks:
+      - "proxy"
+    restart:
+      always
+
   nginx:
     image: nginx:latest
     volumes:
@@ -33,31 +57,8 @@ services:
       - client
       - server
       # - wiki
-
-#  database:
-#    build:
-#        context: db
-#        dockerfile: dockerfile
-#    networks: 
-#        - "database"
-#    env_file:
-#        - ./docker.env #TODO: Change credentials
-#    environment:
-#        MYSQL_RANDOM_ROOT_PASSWORD: "yes"
-#        MYSQL_DATABASE: "essentiel"
-#    volumes:
-#        - "db"
-#    restart: 
-#        always
-    
-  # wiki:
-  #   build:
-  #     context: wiki
-  #     dockerfile: Dockerfile
-  #   ports:
-  #     - 8000:8000
-  #   restart:
-  #     always
+    restart:
+      always
 
 networks:
   proxy:
