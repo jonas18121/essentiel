@@ -14,4 +14,4 @@ EXPOSE 4200
 
 FROM nginx:1.15.8-alpine
 
-COPY --from=builder /usr/src/app/dist/SampleApp/ /usr/share/nginx/html
+COPY --from=builder /usr/src/app/dist/client/ /usr/share/nginx/html
