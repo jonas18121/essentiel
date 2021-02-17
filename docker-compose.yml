@@ -27,6 +27,8 @@ services:
       MYSQL_DATABASE: "essentiel"
       MYSQL_USER: "essentiel"
       MYSQL_PASSWORD: "essentielessentiel"
+    ports:
+      - 3306:3306
     volumes:
       - "db"
     restart: 
