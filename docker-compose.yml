@@ -12,6 +12,8 @@ services:
     networks:
       - "proxy"
       - "database"
+    depends_on:
+      - database
     restart:
       always
 
@@ -20,11 +22,11 @@ services:
       context: db
     networks: 
       - "database"
-    env_file:
-      - ./docker.env
     environment:
       MYSQL_RANDOM_ROOT_PASSWORD: "yes"
       MYSQL_DATABASE: "essentiel"
+      MYSQL_USER: "essentiel"
+      MYSQL_PASSWORD: "essentielessentiel"
     volumes:
       - "db"
     restart: 
@@ -34,8 +36,8 @@ services:
     build:
       context: .
       dockerfile: wiki/Dockerfile
-    networks:
-      - "proxy"
+    ports:
+      - 8000:8000
     restart:
       always
 
