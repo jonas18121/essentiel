@@ -29,7 +29,6 @@ public class EventController {
      * @return a list of Events
      */
     @GetMapping // Map ONLY GET Requests
-    @PreAuthorize("hasRole('USER') or hasRole('PM') or hasRole('ADMIN')")
     public List<Event> findAll() {
         // This returns a JSON or XML with the events
         return repository.findAll();
@@ -41,7 +40,6 @@ public class EventController {
      * @return called event
      */
     @GetMapping("/name/{eventName}") // Map ONLY GET Requests
-    @PreAuthorize("hasRole('USER') or hasRole('PM') or hasRole('ADMIN')")
     public Event findByName(@PathVariable String eventName) {
         // @PathVariable means it is a parameter from path
         return repository.findByName(eventName);
@@ -54,7 +52,6 @@ public class EventController {
      * @throws NotFoundException
      */
     @GetMapping("/{id}") // Map ONLY GET Requests
-    @PreAuthorize("hasRole('USER') or hasRole('PM') or hasRole('ADMIN')")
     public Event findById(@PathVariable Long id) throws NotFoundException {
         return repository.findById(id)
                 .orElseThrow(NotFoundException::new);

@@ -11,11 +11,11 @@ export class GeolocalisationService {
   private readonly seriesUrl: string;
 
   constructor(private http: HttpClient) {
-    this.seriesUrl = 'https://nominatim.openstreetmap.org/';
+    this.seriesUrl = 'https://api-adresse.data.gouv.fr/search/';
   }
 
-  search(location: Address): Observable<object> {
-    return this.http.get<object>(`${this.seriesUrl}?addressdetails=1&q=${location}&format=json&limit=1`,
+  search(location: string): Observable<object> {
+    return this.http.get<object>(`${this.seriesUrl}?q=${location}&type=housenumber&autocomplete=1`,
       {
         responseType: 'json'
       });

@@ -19,6 +19,8 @@ import { ViewEventComponent } from './components/view-event/view-event.component
 import { HeaderComponent } from './components/header/header.component';
 import { LoginComponent } from './components/login/login.component';
 import {RegisterComponent} from "./components/register/register.component";
+import {MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldModule} from "@angular/material/form-field";
+import {MatOptionModule} from "@angular/material/core";
 
 
 @NgModule({
@@ -34,14 +36,16 @@ import {RegisterComponent} from "./components/register/register.component";
     LoginComponent,
     RegisterComponent
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        HttpClientModule,
-        BrowserAnimationsModule,
-        ReactiveFormsModule,
-        FormsModule
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    ReactiveFormsModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatOptionModule
+  ],
   providers: [
     MarkerService,
     PopUpService

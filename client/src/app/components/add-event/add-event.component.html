@@ -19,19 +19,23 @@
       </div>
     </div>
 
-
     <hr>
     <h2>Adresse</h2>
-
+    <div class="form-group">
+      <input type="text" class="form-control" (keyup)="getAddress($event)" formControlName="address" list="dynmicAddress" id="address" name="address" placeholder="Entrer une adresse ..." />
+      <datalist id="dynmicAddress">
+        <option *ngFor="let item of addressList" [value]="item.properties.label">{{item.properties.label}}</option>
+      </datalist>
+    </div>
     <div class="form-row">
       <div class="form-group col-md-6">
-        <input type="text" class="form-control" id="street" formControlName="street" placeholder="Rue">
+        <input type="text" class="form-control" id="street" formControlName="street" placeholder="Rue" disabled>
       </div>
       <div class="form-group col-md-4">
-        <input type="text" class="form-control" id="city" formControlName="city" placeholder="Ville">
+        <input type="text" class="form-control" id="city" formControlName="city" placeholder="Ville" disabled>
       </div>
       <div class="form-group col-md-2">
-        <input type="text" class="form-control" id="zip" formControlName="zip" placeholder="Code Postal" pattern="[0-9]{5}">
+        <input type="text" class="form-control" id="zip" formControlName="zip" placeholder="Code Postal" pattern="[0-9]{5}" disabled>
       </div>
     </div>
 
@@ -54,6 +58,9 @@
         <input type="text" class="form-control" id="price" formControlName="price" placeholder="Prix par participant">
       </div>
     </div>
+
+    <input type="text" id="lon" formControlName="lon" hidden>
+    <input type="text" id="lat" formControlName="lat" hidden>
 
     <button type="submit" class="btn btn-primary mt-3" [disabled]="!eventForm.valid">Submit</button>
 
