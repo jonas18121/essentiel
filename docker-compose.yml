@@ -1,14 +1,16 @@
 version: "3"
 services:
   client:
-    image: docker.pkg.github.com/alcinae/essentiel/client:beta-compose
+    build:
+      context: client
     networks:
       - "proxy"
     restart:
       always
 
   server:
-    image: docker.pkg.github.com/alcinae/essentiel/server:beta-compose
+    build:
+      context: server
     networks:
       - "proxy"
       - "database"
@@ -60,7 +62,7 @@ services:
     depends_on:
       - client
       - server
-      # - wiki
+      - wiki
     restart:
       always
 
