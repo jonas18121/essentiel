@@ -7,6 +7,7 @@ import {TokenStorageService} from "../../services/auth/token-storage.service";
 import {Address} from "../../models/address/address";
 import {Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
+import {GeolocalisationService} from "../../services/geolocalisation/geolocalisation.service";
 
 @Component({
   selector: 'app-add-event',
@@ -19,6 +20,10 @@ export class AddEventComponent implements OnInit {
   roles: string[];
   authority: string;
 
+  eventToAdd: Event;
+  lastkeydown1: number = 0;
+  addressList: [];
+
   eventForm = this.fb.group({
     name: [''],
     date: [''],
@@ -28,15 +33,19 @@ export class AddEventComponent implements OnInit {
     zip: [''],
     structure: [''],
     public: [''],
-    price: ['']
+    price: [''],
+    lon: [''],
+    lat: ['']
   });
 
   constructor(
     private router: Router,
     private eventService: EventService,
+    private geolocalisationService: GeolocalisationService,
     private fb: FormBuilder,
     private http: HttpClient,
     private tokenStorage: TokenStorageService) {
+    this.eventToAdd = new Event();
   }
 
   ngOnInit(): void {
@@ -60,34 +69,37 @@ export class AddEventComponent implements OnInit {
   }
 
   onSubmit(): void {
-    let eventToAdd = new Event();
     let currentAddress = new Address();
-    eventToAdd.name = this.eventForm.value.name;
+    this.eventToAdd.name = this.eventForm.value.name;
     currentAddress.city = this.eventForm.value.city;
     currentAddress.street = this.eventForm.value.street;
     currentAddress.postalcode = this.eventForm.value.zip;
     currentAddress.country = "France";
-    this.searchLocation(currentAddress).subscribe(response => {
-      if (response[0]) {
-        eventToAdd.longitude = response[0].lon;
-        eventToAdd.latitude = response[0].lat;
-        if (eventToAdd.longitude && eventToAdd.latitude)
-          this.eventService.save(eventToAdd).subscribe(() => this.gotoHome());
-        else
-          console.log("ERROR !!!");
-      }
-    });
+    this.eventToAdd.longitude = this.eventForm.value.lon;
+    this.eventToAdd.latitude = this.eventForm.value.lat;
+    if (this.eventToAdd.name && this.eventToAdd.longitude && this.eventToAdd.latitude)
+      this.eventService.save(this.eventToAdd).subscribe(() => this.gotoHome());
+    else
+      console.log("Name, address or coordinates empty...");
   }
 
   gotoHome(): void {
     this.router.navigate(['/home']);
   }
 
-  private searchLocation(location: Address): Observable<object> {
-    return this.http.get(
-      `https://nominatim.openstreetmap.org/?format=jsonv2&zoom=12&addressdetails=1&street=${location.street}&city=${location.city}&country=${location.country}&postalcode=${location.postalcode}&limit=1`,
-      {
-        responseType: 'json'
+  public getAddress($event) {
+    let address = (<HTMLInputElement>document.getElementById('address')).value;
+    this.addressList = [];
+    if (address.length > 2 && $event.timeStamp - this.lastkeydown1 > 200) {
+      this.geolocalisationService.search(address).subscribe(response => {
+        this.addressList = response["features"];
+        this.eventForm.controls['street'].setValue(response["features"][0]["properties"]["name"]);
+        this.eventForm.controls['city'].setValue(response["features"][0]["properties"]["city"]);
+        this.eventForm.controls['zip'].setValue(response["features"][0]["properties"]["postcode"]);
+        this.eventForm.controls['lon'].setValue(response["features"][0]["geometry"]["coordinates"][0]);
+        this.eventForm.controls['lat'].setValue(response["features"][0]["geometry"]["coordinates"][1]);
+        this.lastkeydown1 = $event.timeStamp;
       });
+    }
   }
 }

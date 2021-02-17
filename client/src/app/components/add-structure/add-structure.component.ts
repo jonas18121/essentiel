@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Structure } from "../../models/structure/structure";
 import { StructureService } from "../../services/structure/structure.service";
 import { Router } from "@angular/router";
-import { FormBuilder, ReactiveFormsModule} from "@angular/forms";
+import { FormBuilder} from "@angular/forms";
 import { GeolocalisationService } from "../../services/geolocalisation/geolocalisation.service";
-import { Observable } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 import {TokenStorageService} from "../../services/auth/token-storage.service";
 import {Address} from "../../models/address/address";
@@ -20,18 +19,25 @@ export class AddStructureComponent implements OnInit {
   roles: string[];
   authority: string;
 
+  structureToAdd: Structure;
+  lastkeydown1: number = 0;
+  addressList: [];
+
   structureForm = this.fb.group({
     name: [''],
     type: [''],
     street: [''],
     city: [''],
     zip: [''],
+    address: [''],
     description: [''],
     contactName: [''],
     contactFunction: [''],
     phone: [''],
     email: [''],
-    label: ['']
+    label: [''],
+    lon: [''],
+    lat: ['']
   });
 
   constructor(
@@ -41,6 +47,7 @@ export class AddStructureComponent implements OnInit {
     private fb: FormBuilder,
     private http: HttpClient,
     private tokenStorage: TokenStorageService) {
+    this.structureToAdd = new Structure();
   }
 
   ngOnInit(): void {
@@ -64,35 +71,38 @@ export class AddStructureComponent implements OnInit {
   }
 
   onSubmit(): void {
-    let structureToAdd = new Structure();
     let currentAddress = new Address();
-    structureToAdd.name = this.structureForm.value.name;
+    this.structureToAdd.name = this.structureForm.value.name;
     currentAddress.city = this.structureForm.value.city;
     currentAddress.street = this.structureForm.value.street;
     currentAddress.postalcode = this.structureForm.value.zip;
     currentAddress.country = "France";
-    this.searchLocation(currentAddress).subscribe(response => {
-      if (response[0]) {
-        structureToAdd.address = response[0].display_name;
-        structureToAdd.longitude = response[0].lon;
-        structureToAdd.latitude = response[0].lat;
-        if (structureToAdd.address && structureToAdd.longitude && structureToAdd.latitude)
-          this.structureService.save(structureToAdd).subscribe(() => this.gotoHome());
-        else
-          console.log("ERROR !!!");
-      }
-    });
+    this.structureToAdd.address = currentAddress.street + currentAddress.postalcode + currentAddress.city;
+    this.structureToAdd.longitude = this.structureForm.value.lon;
+    this.structureToAdd.latitude = this.structureForm.value.lat;
+    if (this.structureToAdd.name && this.structureToAdd.address && this.structureToAdd.longitude && this.structureToAdd.latitude)
+      this.structureService.save(this.structureToAdd).subscribe(() => this.gotoHome());
+    else
+      console.log("Name, address or coordinates empty...");
   }
 
   gotoHome(): void {
     this.router.navigate(['/home']);
   }
 
-  private searchLocation(location: Address): Observable<object> {
-    return this.http.get(
-      `https://nominatim.openstreetmap.org/?format=jsonv2&zoom=12&addressdetails=1&street=${location.street}&city=${location.city}&country=${location.country}&postalcode=${location.postalcode}&limit=1`,
-      {
-        responseType: 'json'
+  public getAddress($event) {
+    let address = (<HTMLInputElement>document.getElementById('address')).value;
+    this.addressList = [];
+    if (address.length > 2 && $event.timeStamp - this.lastkeydown1 > 200) {
+      this.geolocalisationService.search(address).subscribe(response => {
+        this.addressList = response["features"];
+        this.structureForm.controls['street'].setValue(response["features"][0]["properties"]["name"]);
+        this.structureForm.controls['city'].setValue(response["features"][0]["properties"]["city"]);
+        this.structureForm.controls['zip'].setValue(response["features"][0]["properties"]["postcode"]);
+        this.structureForm.controls['lon'].setValue(response["features"][0]["geometry"]["coordinates"][0]);
+        this.structureForm.controls['lat'].setValue(response["features"][0]["geometry"]["coordinates"][1]);
+        this.lastkeydown1 = $event.timeStamp;
       });
+    }
   }
 }
