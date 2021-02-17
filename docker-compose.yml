@@ -12,6 +12,7 @@ services:
     networks:
       - "proxy"
       - "database"
+      
     restart:
       always
 
@@ -25,19 +26,21 @@ services:
     environment:
       MYSQL_RANDOM_ROOT_PASSWORD: "yes"
       MYSQL_DATABASE: "essentiel"
+    ports:
+      - 3306:3306
     volumes:
       - "db"
     restart: 
       always
 
-  wiki:
-    build:
-      context: .
-      dockerfile: wiki/Dockerfile
-    networks:
-      - "proxy"
-    restart:
-      always
+#  wiki:
+#    build:
+#      context: .
+#      dockerfile: wiki/Dockerfile
+#    networks:
+#      - "proxy"
+#    restart:
+#      always
 
   nginx:
     image: nginx:latest
