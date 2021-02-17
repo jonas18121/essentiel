@@ -29,7 +29,6 @@ public class StructureController {
      * @return a list of Structures
      */
     @GetMapping // Map ONLY GET Requests
-    @PreAuthorize("hasRole('USER') or hasRole('PM') or hasRole('ADMIN')")
     public List<Structure> findAll() {
         // This returns a JSON or XML with the structures
         return repository.findAll();
@@ -41,7 +40,6 @@ public class StructureController {
      * @return called structure
      */
     @GetMapping("/name/{structureName}") // Map ONLY GET Requests
-    @PreAuthorize("hasRole('USER') or hasRole('PM') or hasRole('ADMIN')")
     public Structure findByName(@PathVariable String structureName) {
         // @PathVariable means it is a parameter from path
         return repository.findByName(structureName);
@@ -54,7 +52,6 @@ public class StructureController {
      * @throws NotFoundException
      */
     @GetMapping("/{id}") // Map ONLY GET Requests
-    @PreAuthorize("hasRole('USER') or hasRole('PM') or hasRole('ADMIN')")
     public Structure findById(@PathVariable Long id) throws NotFoundException {
         return repository.findById(id)
                 .orElseThrow(NotFoundException::new);
