@@ -36,14 +36,14 @@ services:
     restart: 
       always
 
-  wiki:
-    build:
-      context: .
-      dockerfile: wiki/Dockerfile
-    ports:
-      - 8000:8000
-    restart:
-      always
+#  wiki:
+#    build:
+#      context: .
+#      dockerfile: wiki/Dockerfile
+#    ports:
+#      - 8000:8000
+#    restart:
+#      always
 
   nginx:
     image: nginx:latest
@@ -62,7 +62,7 @@ services:
     depends_on:
       - client
       - server
-      - wiki
+#      - wiki
     restart:
       always
 
