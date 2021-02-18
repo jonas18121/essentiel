@@ -1,0 +1,3 @@
+FROM mariadb
+
+COPY essentiel.sql /docker-entrypoint-initdb.d/essentiel.sql

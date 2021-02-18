@@ -488,7 +488,7 @@ definitions:
 
 
 # Added by API Auto Mocking Plugin
-host: "localhost:8080"
+host: "server:8080"
 basePath: "/api"
 schemes:
  - "http"

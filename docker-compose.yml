@@ -1,0 +1,74 @@
+version: "3"
+services:
+  client:
+    build:
+      context: client
+    networks:
+      - "proxy"
+    restart:
+      always
+
+  server:
+    build:
+      context: server
+    networks:
+      - "proxy"
+      - "database"
+    depends_on:
+      - database
+    restart:
+      always
+
+  database:
+    build:
+      context: db
+    networks: 
+      - "database"
+    environment:
+      MYSQL_RANDOM_ROOT_PASSWORD: "yes"
+      MYSQL_DATABASE: "essentiel"
+      MYSQL_USER: "essentiel"
+      MYSQL_PASSWORD: "essentielessentiel"
+    ports:
+      - 3306:3306
+    volumes:
+      - "db"
+    restart: 
+      always
+
+  wiki:
+    build:
+      context: .
+      dockerfile: wiki/Dockerfile
+    ports:
+      - 8000:8000
+    restart:
+      always
+
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./proxy/nginx.conf:/etc/nginx/nginx.conf
+    networks:
+      - "proxy"
+    ports:
+      - 80:80
+      - 443:443
+    environment:
+      - ENV=development
+      # - CLIENT=http://client:4200
+      # - SERVER=http://server:8080
+      # - WIKI=http://wiki:8000
+    depends_on:
+      - client
+      - server
+      - wiki
+    restart:
+      always
+
+networks:
+  proxy:
+  database:
+
+volumes:
+  db:

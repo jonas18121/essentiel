@@ -17,7 +17,7 @@
 
     <ul class="nav flex-column mb-2">
       <li *ngFor="let structure of structures" class="nav-item">
-        <a class="nav-link" href="http://localhost:8000/structures/{{ encodeUri(structure.name) }}" target="_blank">{{ structure.name }}</a>
+        <a class="nav-link" href="/wiki/structures/{{ encodeUri(structure.name) }}" target="_blank">{{ structure.name }}</a>
       </li>
     </ul>
 
@@ -33,7 +33,7 @@
 
     <ul class="nav flex-column mb-2">
       <li *ngFor="let event of events" class="nav-item">
-        <a class="nav-link" href="http://localhost:8000/évènements/{{ encodeUri(event.name) }}" target="_blank">{{ event.name }}</a>
+        <a class="nav-link" href="/wiki/évènements/{{ encodeUri(event.name) }}" target="_blank">{{ event.name }}</a>
       </li>
     </ul>
 
