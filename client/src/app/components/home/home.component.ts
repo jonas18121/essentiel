@@ -48,8 +48,24 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['/add/structure']);
   }
 
+  editStructure(id) {
+    // go to edit page
+  }
+
+  delStructure(id) {
+    // this.structureService.delete(id);
+  }
+
   gotoAddEvent() {
     this.router.navigate(['/add/event']);
+  }
+
+  editEvent(id) {
+    // go to edit page
+  }
+
+  delEvent(id) {
+    // this.eventService.delete(id);
   }
 
   findAllStructures() {
