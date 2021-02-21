@@ -77,6 +77,8 @@ export class AddEventComponent implements OnInit {
     currentAddress.country = "France";
     this.eventToAdd.longitude = this.eventForm.value.lon;
     this.eventToAdd.latitude = this.eventForm.value.lat;
+    this.eventToAdd.price = this.eventForm.value.price;
+    this.eventToAdd.audience = this.eventForm.value.public;
     if (this.eventToAdd.name && this.eventToAdd.longitude && this.eventToAdd.latitude)
       this.eventService.save(this.eventToAdd).subscribe(() => this.gotoHome());
     else

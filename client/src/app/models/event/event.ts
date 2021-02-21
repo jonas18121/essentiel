@@ -13,4 +13,6 @@ export class Event {
   createdAt: Date;
   updatedAt: Date;
   organizer: Structure;
+  price: number;
+  audience: string;
 }
