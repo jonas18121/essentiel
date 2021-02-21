@@ -33,9 +33,9 @@ export class StructureService {
     return this.http.post<Structure>(this.structureUrl, structure, headers);
   }
 
-  public delete(structure: Structure): Observable<Structure> {
+  public delete(structureId: number): Observable<Structure> {
     const header = new HttpHeaders().set('Authorization', this.tokenType + this.tokenService.getToken());
     const headers = { headers: header };
-    return this.http.delete<Structure>(this.structureUrl + structure.id, headers);
+    return this.http.delete<any>(this.structureUrl + structureId, headers);
   }
 }

@@ -33,9 +33,9 @@ export class EventService {
     return this.http.post<Event>(this.eventUrl, Event, headers);
   }
 
-  public delete(Event: Event): Observable<Event> {
+  public delete(EventId: number): Observable<Event> {
     const header = new HttpHeaders().set('Authorization', this.tokenType + this.tokenService.getToken());
     const headers = { headers: header };
-    return this.http.delete<Event>(this.eventUrl + Event.id, headers);
+    return this.http.delete<any>(this.eventUrl + EventId, headers);
   }
 }
