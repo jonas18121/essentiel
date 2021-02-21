@@ -77,7 +77,7 @@ export class AddStructureComponent implements OnInit {
     currentAddress.street = this.structureForm.value.street;
     currentAddress.postalcode = this.structureForm.value.zip;
     currentAddress.country = "France";
-    this.structureToAdd.address = currentAddress.street + currentAddress.postalcode + currentAddress.city;
+    this.structureToAdd.address = currentAddress.street + " " + currentAddress.postalcode + " " + currentAddress.city;
     this.structureToAdd.longitude = this.structureForm.value.lon;
     this.structureToAdd.latitude = this.structureForm.value.lat;
     if (this.structureToAdd.name && this.structureToAdd.address && this.structureToAdd.longitude && this.structureToAdd.latitude)
