@@ -53,9 +53,9 @@ export class HomeComponent implements OnInit {
   }
 
   delStructure(id) {
-    this.structureService.delete(id).subscribe( () => {​​
+    this.structureService.delete(id).subscribe( () => {
       location.reload();
-    }​​);
+    });
   }
 
   gotoAddEvent() {
@@ -67,9 +67,9 @@ export class HomeComponent implements OnInit {
   }
 
   delEvent(id) {
-    this.eventService.delete(id).subscribe( () => {​​
+    this.eventService.delete(id).subscribe( () => {
       location.reload();
-    }​​);
+    });
   }
 
   findAllStructures() {

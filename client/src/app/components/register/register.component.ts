@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from "../../services/auth/auth.service";
 import {SignUpInfo} from "../../services/auth/signup-info";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-register',
@@ -14,13 +15,12 @@ export class RegisterComponent implements OnInit {
   isSignUpFailed = false;
   errorMessage = '';
 
-  constructor(private authService: AuthService) { }
+  constructor(private router: Router,
+              private authService: AuthService) {}
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   onSubmit() {
-    console.log(this.form);
-
     this.signupInfo = new SignUpInfo(
       this.form.name,
       this.form.username,
@@ -29,9 +29,11 @@ export class RegisterComponent implements OnInit {
 
     this.authService.signUp(this.signupInfo).subscribe(
       data => {
-        console.log(data);
         this.isSignedUp = true;
         this.isSignUpFailed = false;
+        this.goToLogin(this.form.username);
+
+
       },
       error => {
         console.log(error);
@@ -39,5 +41,9 @@ export class RegisterComponent implements OnInit {
         this.isSignUpFailed = true;
       }
     );
+  }
+
+  goToLogin(username: string) {
+    this.router.navigate(['/login'], { queryParams: { username: username } });
   }
 }
