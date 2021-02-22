@@ -42,8 +42,9 @@ export class LoginComponent implements OnInit {
     if (this.isLoggedIn)
       this.gotoHome();
 
-    if (this.success != 0)
+    if (this.success != 0) {
       this.isSignedUp = true;
+    }
   }
 
   onSubmit() {

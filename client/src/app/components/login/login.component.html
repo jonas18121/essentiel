@@ -22,7 +22,7 @@
 
               <div class="form-group">
                 <label for="username">Username</label>
-                <input type="text" class="form-control" name="username" [(ngModel)]="form.username" #username="ngModel" required />
+                <input type="text" class="form-control" name="username" [(ngModel)]="form.username" #username="ngModel" required [autofocus]="!isSignedUp" />
                 <div *ngIf="f.submitted && username.invalid">
                   <div class="text-monospace text-muted" *ngIf="username.errors.required">Username is required</div>
                 </div>
@@ -30,7 +30,7 @@
 
               <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" class="form-control" name="password" [(ngModel)]="form.password" #password="ngModel" required minlength="6" />
+                <input type="password" class="form-control" id="password" name="password" [(ngModel)]="form.password" #password="ngModel" required minlength="6" [autofocus]="isSignedUp"/>
                 <div *ngIf="f.submitted && password.invalid">
                   <div class="text-monospace text-muted" *ngIf="password.errors.required">Password is required</div>
                   <div class="text-monospace text-muted" *ngIf="password.errors.minlength">Password must be at least 6 characters</div>
