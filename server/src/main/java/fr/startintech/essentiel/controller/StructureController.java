@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
@@ -88,6 +89,12 @@ public class StructureController {
     public void delete(@PathVariable Long id) throws NotFoundException {
         repository.findById(id)
                 .orElseThrow(NotFoundException::new);
+        File fileToDelete = new File(repository.findById(id).get().getName().toLowerCase() + ".md");
+        if (fileToDelete.delete()) {
+            System.out.println("Deleting the file: " + fileToDelete.getName().toLowerCase() + ".md");
+        } else {
+            System.out.println("Failed to delete the file.");
+        }
         repository.deleteById(id);
     }
 
