@@ -33,6 +33,12 @@ export class EventService {
     return this.http.post<Event>(this.eventUrl, Event, headers);
   }
 
+  public update(EventId: number, Event: Event): Observable<Event> {
+    const header = new HttpHeaders().set('Authorization', this.tokenType + this.tokenService.getToken());
+    const headers = { headers: header };
+    return this.http.put<Event>(this.eventUrl + EventId, Event, headers);
+  }
+
   public delete(EventId: number): Observable<Event> {
     const header = new HttpHeaders().set('Authorization', this.tokenType + this.tokenService.getToken());
     const headers = { headers: header };

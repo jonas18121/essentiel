@@ -49,7 +49,7 @@ export class HomeComponent implements OnInit {
   }
 
   editStructure(id) {
-    // go to edit page
+    this.router.navigate(['/add/structure'], { queryParams: { id: id } });
   }
 
   delStructure(id) {
@@ -63,7 +63,7 @@ export class HomeComponent implements OnInit {
   }
 
   editEvent(id) {
-    // go to edit page
+    this.router.navigate(['/add/event'], { queryParams: { id: id } });
   }
 
   delEvent(id) {

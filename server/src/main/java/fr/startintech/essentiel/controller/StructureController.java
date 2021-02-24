@@ -4,6 +4,7 @@ import fr.startintech.essentiel.data.model.Structure;
 import fr.startintech.essentiel.data.repository.StructureRepository;
 import fr.startintech.essentiel.exeption.IdMismatchException;
 import fr.startintech.essentiel.exeption.NotFoundException;
+import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -12,7 +13,10 @@ import org.springframework.web.bind.annotation.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Structure REST Controller
@@ -70,10 +74,9 @@ public class StructureController {
         if (structure.getName() != null && !structure.getName().isBlank()) {
             try {
                 FileWriter myWriter = new FileWriter("docs/structures/" + structure.getName().toLowerCase() + ".md");
-                myWriter.write("## Présentation de la structure\n");
-                myWriter.write("- Adresse : " + structure.getAddress() + "\n");
-                myWriter.write("\n");
-                myWriter.write("*Ajoutée le : " + structure.getCreatedAt() + "*\n");
+
+                maskWiki(myWriter, structure);
+
                 myWriter.close();
                 System.out.println("Successfully wrote to the file.");
             } catch (IOException e) {
@@ -87,15 +90,15 @@ public class StructureController {
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('USER') or hasRole('PM') or hasRole('ADMIN')")
     public void delete(@PathVariable Long id) throws NotFoundException {
-        repository.findById(id)
-                .orElseThrow(NotFoundException::new);
-        File fileToDelete = new File(repository.findById(id).get().getName().toLowerCase() + ".md");
-        if (fileToDelete.delete()) {
-            System.out.println("Deleting the file: " + fileToDelete.getName().toLowerCase() + ".md");
-        } else {
-            System.out.println("Failed to delete the file.");
-        }
-        repository.deleteById(id);
+        if (repository.findById(id).isPresent()) {
+            File fileToDelete = new File("docs/structures/" + repository.findById(id).get().getName().toLowerCase() + ".md");
+            if (fileToDelete.delete()) {
+                System.out.println("Deleting the file: " + fileToDelete.getName().toLowerCase());
+            } else {
+                System.out.println("Failed to delete the file : " + fileToDelete.getName());
+            }
+            repository.deleteById(id);
+        } else throw new NotFoundException();
     }
 
     /**
@@ -103,7 +106,9 @@ public class StructureController {
      */
     @DeleteMapping // Map ONLY DELETE Requests
     @PreAuthorize("hasRole('ADMIN')")
-    public void deleteAll() {
+    public void deleteAll() throws IOException {
+        FileUtils.cleanDirectory(new File("docs/structures/"));
+        System.out.println("Deleting all structure files");
         repository.deleteAll();
     }
 
@@ -122,6 +127,65 @@ public class StructureController {
         // @RequestParam means it is a parameter from the GET or POST request
         repository.findById(id).orElseThrow(NotFoundException::new);
         structure.setId(id);
+        structure.setUpdatedAt(new Date());
+        if (structure.getName() != null && !structure.getName().isBlank()) {
+            try {
+                FileWriter myWriter = new FileWriter("docs/structures/" + structure.getName().toLowerCase() + ".md");
+
+                maskWiki(myWriter, structure);
+
+                myWriter.close();
+                System.out.println("Successfully wrote to the file.");
+            } catch (IOException e) {
+                System.out.println("An error occurred.");
+                e.printStackTrace();
+            }
+        }
+
         return repository.save(structure);
+    }
+
+    private void maskWiki(FileWriter myWriter, Structure structure) throws IOException {
+        String createdTime = new SimpleDateFormat("EEEE dd MMM yyyy 'à' HH:mm:ss", Locale.FRANCE).format(structure.getCreatedAt());
+        myWriter.write("## Présentation de la structure\n");
+        myWriter.write("- Nom : " + structure.getName() + "\n");
+        if (structure.getName() != null) {
+            myWriter.write("- Nom : " + structure.getName() + "\n");
+        }
+        if (structure.getType() != null) {
+            myWriter.write("- Type : " + structure.getType() + "\n");
+        }
+        if (structure.getAddress() != null) {
+            myWriter.write("- Adresse : " + structure.getAddress() + "\n");
+        }
+        if (structure.getLabel() != null) {
+            myWriter.write("- Label : " + structure.getLabel() + "\n");
+        }
+        myWriter.write("\n");
+        if (structure.getDescription() != null) {
+            myWriter.write("## Description : \n" + structure.getDescription() + "\n");
+        }
+        myWriter.write("\n");
+        if (structure.getContactName() != null || structure.getPhone() != null || structure.getEmail() != null) {
+            myWriter.write("## Contact : \n");
+            myWriter.write("\n");
+            if (structure.getContactName() != null && structure.getContactFunction() != null) {
+                myWriter.write("- Nom : " + structure.getContactName() + " (" + structure.getContactFunction() + ") \n");
+            }
+            if (structure.getPhone() != null) {
+                myWriter.write("- N° de téléphone : " + structure.getPhone() + "\n");
+            }
+            if (structure.getEmail() != null) {
+                myWriter.write("- Email : " + structure.getEmail() + "\n");
+            }
+        }
+        myWriter.write("\n");
+        myWriter.write("\n");
+        myWriter.write("*Ajoutée le : " + createdTime + "*\n");
+        if (structure.getUpdatedAt() != null) {
+            String updatedTime = new SimpleDateFormat("EEEE dd MMM yyyy 'à' HH:mm:ss", Locale.FRANCE).format(structure.getUpdatedAt());
+            myWriter.write("*Dernière mise à jour le : " + updatedTime + "*\n");
+            myWriter.write("\n");
+        }
     }
 }

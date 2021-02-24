@@ -28,9 +28,8 @@ public class Event {
     /**
      * Event date
      */
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "date", nullable = true)
-    private Date date;
+    private String date;
 
     /**
      * Event hour.
@@ -133,11 +132,11 @@ public class Event {
         this.name = name;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

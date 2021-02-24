@@ -4,14 +4,20 @@ import fr.startintech.essentiel.data.model.Event;
 import fr.startintech.essentiel.data.repository.EventRepository;
 import fr.startintech.essentiel.exeption.IdMismatchException;
 import fr.startintech.essentiel.exeption.NotFoundException;
+import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * Event REST Controller
@@ -69,10 +75,9 @@ public class EventController {
         if (event.getName() != null && !event.getName().isBlank()) {
             try {
                 FileWriter myWriter = new FileWriter("docs/évènements/" + event.getName().toLowerCase() + ".md");
-                myWriter.write("## Présentation de l'évènement\n");
-                myWriter.write("- Adresse : " + event.getCity() + "\n");
-                myWriter.write("\n");
-                myWriter.write("*Ajouté le : " + event.getCreatedAt() + "*\n");
+
+                maskWiki(myWriter, event);
+
                 myWriter.close();
                 System.out.println("Successfully wrote to the file.");
             } catch (IOException e) {
@@ -86,9 +91,15 @@ public class EventController {
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('USER') or hasRole('PM') or hasRole('ADMIN')")
     public void delete(@PathVariable Long id) throws NotFoundException {
-        repository.findById(id)
-                .orElseThrow(NotFoundException::new);
-        repository.deleteById(id);
+        if (repository.findById(id).isPresent()) {
+            File fileToDelete = new File("docs/évènements/" + repository.findById(id).get().getName().toLowerCase() + ".md");
+            if (fileToDelete.delete()) {
+                System.out.println("Deleting the file: " + fileToDelete.getName().toLowerCase());
+            } else {
+                System.out.println("Failed to delete the file : " + fileToDelete.getName());
+            }
+            repository.deleteById(id);
+        } else throw new NotFoundException();
     }
 
     /**
@@ -96,7 +107,9 @@ public class EventController {
      */
     @DeleteMapping // Map ONLY DELETE Requests
     @PreAuthorize("hasRole('ADMIN')")
-    public void deleteAll() {
+    public void deleteAll() throws IOException {
+        FileUtils.cleanDirectory(new File("docs/évènements/"));
+        System.out.println("Deleting all event files");
         repository.deleteAll();
     }
 
@@ -113,8 +126,54 @@ public class EventController {
     public Event event(@RequestBody Event event, @PathVariable Long id) throws IdMismatchException, NotFoundException {
         // @ResponseBody means the returned String is the response, not a view name
         // @RequestParam means it is a parameter from the GET or POST request
+
         repository.findById(id).orElseThrow(NotFoundException::new);
         event.setId(id);
+        event.setUpdatedAt(new Date());
+        if (event.getName() != null && !event.getName().isBlank()) {
+            try {
+                FileWriter myWriter = new FileWriter("docs/évènements/" + event.getName().toLowerCase() + ".md");
+
+                maskWiki(myWriter, event);
+
+                myWriter.close();
+                System.out.println("Successfully wrote to the file.");
+            } catch (IOException e) {
+                System.out.println("An error occurred.");
+                e.printStackTrace();
+            }
+        }
         return repository.save(event);
+    }
+
+    private void maskWiki(FileWriter myWriter, Event event) throws IOException {
+        String createdTime = new SimpleDateFormat("EEEE dd MMM yyyy 'à' HH:mm:ss z", Locale.FRANCE).format(event.getCreatedAt());
+        myWriter.write("## Présentation de l'évènement\n");
+        myWriter.write("- Nom : " + event.getName() + "\n");
+        if (event.getDate() != null && event.getHour() != null ) {
+            myWriter.write("- Début de l'évènement : " + event.getDate() + " à " + event.getHour() + "\n");
+        }
+        if (event.getStreet() != null && event.getZip() != null && event.getCity() != null ) {
+            myWriter.write("- Adresse : " + event.getStreet() + ", " + event.getZip() + " " + event.getCity() + "\n");
+        }
+        myWriter.write("\n");
+        myWriter.write("## Informations diverses : \n");
+        if (event.getOrganizer() != null) {
+            myWriter.write("- Organisateur : " + event.getOrganizer() + "\n");
+        }
+        if (event.getAudience() != null) {
+            myWriter.write("- Public : " + event.getAudience()+ "\n");
+        }
+        if (event.getPrice() != null) {
+            myWriter.write("- Prix : " + event.getPrice() + "\n");
+        }
+        myWriter.write("\n");
+        myWriter.write("\n");
+        myWriter.write("*Ajoutée le : " + createdTime + "*\n");
+        if (event.getUpdatedAt() != null) {
+            String updatedTime = new SimpleDateFormat("EEEE dd MMM yyyy 'à' HH:mm:ss z", Locale.FRANCE).format(event.getUpdatedAt());
+            myWriter.write("*Dernière mise à jour le : " + updatedTime + "*\n");
+            myWriter.write("\n");
+        }
     }
 }

@@ -45,7 +45,7 @@ services:
     ports:
       - 8000:8000
     volumes:
-      - docs:/docs:ro
+      - docs:/app/docs:ro
     restart:
       always
 

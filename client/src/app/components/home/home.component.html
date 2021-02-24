@@ -18,20 +18,20 @@
     <table class="table table-sm table-borderless">
       <tr *ngFor="let structure of structures">
         <td>
-          <a class="nav-link" href="/wiki/structures/{{ encodeUri(structure.name) }}" target="_blank">{{ structure.name }}</a>
+          <a id="{{ structure.id }}" class="nav-link" href="/wiki/structures/{{ encodeUri(structure.name).toLowerCase() }}" target="_blank">{{ structure.name }}</a>
         </td>
         <td class="pl-3" align="right">
           <button *ngIf="authority" (click)="editStructure(structure.id)" class="btn btn-outline-warning btn-sm border-bottom border-warning">Edit</button>
         </td>
         <td class="pr-3" align="right">
           <button *ngIf="authority" (click)="delStructure(structure.id)" class="btn btn-outline-danger btn-sm border-bottom border-danger">X</button>
-        </td> 
+        </td>
       </tr>
     </table>
 
     <hr style="width:75%; margin-left: auto; margin-right: auto;">
 
-    
+
     <h4 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
       Evenements
       <button *ngIf="authority" (click)="gotoAddEvent()" class="btn btn-success btn-sm">
@@ -41,7 +41,7 @@
 
     <table class="table table-sm table-borderless">
       <tr *ngFor="let event of events">
-        <td><a class="nav-link" href="/wiki/évènements/{{ encodeUri(event.name) }}" target="_blank">{{ event.name }}</a></td>
+        <td><a id="{{ event.id }}" class="nav-link" href="/wiki/évènements/{{ encodeUri(event.name).toLowerCase() }}" target="_blank">{{ event.name }}</a></td>
         <td class="pl-3" align="right">
           <button *ngIf="authority" (click)="editEvent(event.id)" class="btn btn-outline-warning btn-sm border-bottom border-warning">Edit</button>
         </td>

@@ -149,20 +149,9 @@ public class Structure {
         return type;
     }
 
-    /**
-     * Structure type to set from the types array.
-     * @param typeId Position id in the types array.
-     * @throws Exception Throws an exception if id doesnt match.
-     */
-    public void setType(int typeId) throws Exception {
-        switch (typeId) {
-            case 1 -> this.type = types[0];
-            case 2 -> this.type = types[1];
-            case 3 -> this.type = types[2];
-            default -> throw new Exception();
-        }
+    public void setType(String type) {
+        this.type = type;
     }
-
 
     public String getAddress() {
         return address;
@@ -170,10 +159,6 @@ public class Structure {
 
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public String getDescription() {

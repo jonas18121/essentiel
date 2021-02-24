@@ -4,8 +4,6 @@ WORKDIR /app
 
 COPY server/mkdocs.yml mkdocs.yml
 
-RUN mkdir docs
-
 RUN pip install mkdocs mkdocs-material
 
 CMD ["mkdocs", "serve","-a","0.0.0.0:8000"]

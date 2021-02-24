@@ -3,6 +3,8 @@ import * as L from 'leaflet';
 import { PopUpService } from '../pop-up/pop-up.service';
 import {StructureService} from "../structure/structure.service";
 import {EventService} from "../event/event.service";
+import {Structure} from "../../models/structure/structure";
+import {Event} from "../../models/event/event";
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +19,7 @@ export class MarkerService {
               private eventService: EventService) { }
 
   makeStructuresMarkers(map: L.map): void {
-    this.structureService.findAll().subscribe((res: any) => {
+    this.structureService.findAll().subscribe((res: Structure[]) => {
 
       for (const s of res) {
 
@@ -35,7 +37,7 @@ export class MarkerService {
 
     });
 
-    this.eventService.findAll().subscribe((res: any) => {
+    this.eventService.findAll().subscribe((res: Event[]) => {
 
       for (const s of res) {
 

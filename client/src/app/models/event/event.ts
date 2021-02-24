@@ -1,18 +1,17 @@
-import {Structure} from "../structure/structure";
-
 export class Event {
   id: number;
   name: string;
-  startTime: Date;
-  endTime: Date;
+  date: string;
+  hour: string;
   street: string;
   city: string;
   zip: string;
+  address: string;
   longitude: string;
   latitude: string;
   createdAt: Date;
   updatedAt: Date;
-  organizer: Structure;
+  organizer: number;
   price: number;
   audience: string;
 }

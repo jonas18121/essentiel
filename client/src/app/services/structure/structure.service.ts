@@ -33,6 +33,12 @@ export class StructureService {
     return this.http.post<Structure>(this.structureUrl, structure, headers);
   }
 
+  public update(structureId: number, structure: Structure): Observable<Structure> {
+    const header = new HttpHeaders().set('Authorization', this.tokenType + this.tokenService.getToken());
+    const headers = { headers: header };
+    return this.http.put<Structure>(this.structureUrl + structureId, structure, headers);
+  }
+
   public delete(structureId: number): Observable<Structure> {
     const header = new HttpHeaders().set('Authorization', this.tokenType + this.tokenService.getToken());
     const headers = { headers: header };
